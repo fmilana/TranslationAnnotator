@@ -1,0 +1,124 @@
+Fontenelle (1686)
+
+7    7            <P007>
+7    7            [Page 48]<LS> Le Soleil est au centre de l'Univers , & là il est 
+7    7            immobile ; aprés luy qu'est-ce qui suit ? C'est Mercure , répondis-je , il tourne autour du 
+7    7            Soleil , en sorte que le Soleil est le centre du Cercle que Mercure décrit. Au-dessus de 
+7    7            Mercure est Vénus , qui tourne de mesme autour du Soleil. Ensuite vient la Terre , qui estant 
+7    7            plus élevée que Mercure & Venus , décrit autour du [Page 49] Soleil un plus grand Cercle que 
+7    7            ces Planetes. Enfin suivent Mars, Jupiter, Saturne , selon l'ordre que je vous les nomme , & 
+7    7            vous voyez bien que Saturne doit décrire autour du Soleil le plus grand Cercle de tous ; aussi 
+7    7            employe-t-il plus de temps qu'aucune autre Planete à faire sa révolution. Et la Lune ? vous 
+7    7            l'oubliez , interrompit-elle. Je la retrouveray bien , repris-je. La [Page 50] Lune tourne autour 
+7    7            de la Terre , & ne l'abandonne point ; mais comme la Terre avance toûjours dans le Cercle 
+7    7            qu'elle décrit autour du Soleil, la Lune la suit en tournant toûjours autour d'elle , & si elle 
+7    7            tourne [Page 52] autour du Soleil , ce n'est que pour ne point quitter la Terre.</LS>
+7    7            </P007>
+
+Domvill (1687)
+
+7    5            <P005>
+7    5            [Page 15] [] The Sun, you say, is in the Center of the World, and there remains 
+7    5            immoveable; pray what follows next? 'Tis Mercury, says I, he turns about the Sun, so that 7    5            the Sun is the Center of that Circle describ'd by Mercury. Above Mercury is 
+7    5            Venus, which likewise turns about the Sun. Next follows the Earth, 
+7    5            which being above Mercury and Venus, describes about the Sun a Circle 
+7    5            greater than theirs. Then follow Mars, Iupiter and Saturn in the 
+7    5            order I have told you, and you may perceive that Saturn ought to 
+7    5            describe about the Sun the greatest Circle of all, and he likewise is 
+7    5            longer than any other Planet in performing his Revolution. And what, 
+7    5            says she, becomes of the Moon? you forget her. I'l meet her again, 
+7    5            said I, easy enough; she keeps close to the Earth, and forsakes her 
+7    5            not, but as the Earth advances daily in the Circle which she 
+7    5            describes about the Sun; the Moon follows in her daily course about 
+7    5            the Earth; so that if the Moon turn about the Sun, 'tis only because 
+7    5            she will not forsake the Earth.
+7    5            </P005>
+
+Glanvill (1688)
+
+7    6            <P006>
+7    6            [Page 19] [] The Sun You say is in the Centre of the Universe, and 
+7    6            [Page  20] is immovable; what follows next? It is Mercury, said I, he turns 
+7    6            round the Sun, so that the Sun is the 
+7    6            Centre of the Circle wherein Mercury moves; above Mercury is Venus, who 
+7    6            turns also round the Sun; after comes the Earth, which being placed 
+7    6            higher than Mercury and Venus, makes a greater 
+7    6            circle round the Sun than either of them; at last come Mars, Jupiter, 
+7    6            Saturn, in the same order I name 'em, so that Saturn hath the greatest 
+7    6            circle round the Sun, which is the reason he is a longer time in making 
+7    6            his Revolution than any of the other Planets. And the Moon, you have 
+7    6            forgot her, said she: We shall quickly find her again, said I; the Moon 
+7    6            turns round the Earth, and doth not leave her, but as the Earth advanceth 
+7    6            in the Circle, which she describes about the Sun, and if the Moon turns 
+7    6            round the Sun, it is because she will not quit the Earth [].
+
+Behn (1688)
+
+7    12            <P012>
+7    12            [Page 23] [] <LS> You place the Sun unmoveable in the Centre of the Universe; Pray, what 
+7    12             follows next? Mercury, said I, who turns round the Sun; so that the Sun is in the Centre of 7    12             the Circle he describes: And above Mercury, Venus; who turns also round 
+7    12             the Sun: Next comes the Earth; which being more elivated than Mercury, or Venus, 
+7    12            [Page 24] describes a Circle of a greater Circumference that those two 
+7    12            Planets: Last, come Mars, Iupiter and Saturn, in their order, as I have nam'd 'em: So that 
+7    12            you see easily, that Saturn ought to make the greatest Circle round the Sun; it is therefore
+7    12             that Saturn takes more time to make his Revolution, than any other Planet. Ah, but, said 
+7    12             the Marquiese, interrupting me, you forget the Moon. Do not fear, said I, Madam; I shall
+7    12            soon find her again. The Moon turns round the Earth, and never leaves it; and as the Earth
+7    12            moves in the Circle it describes round the Sun, the Moon follows the Earth in turning
+7    12            round it; and if the Moon do move round the Sun, it is only because she will not abandon
+7    12            the Earth. </LS>
+7    12            </P012>
+
+===============================================================================================
+
+Fontenelle (1686)
+
+79    79            <P079>
+79    79            [Page 282] [] Je ne me contente , reprit-elle , ny de vos Rochers , ni de vos Oiseaux. 
+79    79            Cela ne laisseroit pas d'être joly , mais puis que la Nature a donné tant de Lunes à 
+79    79            Saturne & à Jupiter , c'est une marque [Page 283] qu'il faut des Lunes. J'eusse êté bien-aise 
+79    79            que tous les Mondes éloignez du Soleil en eussent eu , si Mars ne nous fût point 
+79    79            venu faire une exception desagreable. Ah ! vraiment , répliquay-je , si <LS> vous vous 
+79    79            mêliez de Philosophie plus que vous ne faites il faudroit bien que vous vous 
+79    79            accoûtumassiez à voir des exceptions dans les meilleurs Sistêmes</LS> []
+79    79            </P079>
+
+Domvill (1687)
+
+79    74            <P074>
+79    74            [Page  67]I am not satisfy'd, says she, neither with your Rocks 
+79    74            nor your Birds; not but that it may be very pretty; but since Nature 
+79    74            has given so many Moons to Saturn and Iupiter, 'tis a sign there is 
+79    74            occasion for them. I should have been glad that all the Worlds far 
+79    74            distant from the Sun had them likewise, but Mars I find makes a 
+79    74            disagreeable exception. Ah! says I, <LS> if you look'd more into 
+79    74            Philosophy than you do, you would accustom your 
+79    74            self to find exceptions in the best Systems </LS>. []
+79    74            </P074>
+
+Glanvill (1688)
+
+79    61            <P061>
+79    61            [Page 119] [] I am not at all contented, says she, with your Rocks, or your 
+79    61            Birds; 'tis a pretty fancy indeed, but 'tis a sign that there should be 
+79    61            Moons in Mars, since Nature hath given so many to Saturn, and Jupiter; 
+79    61            and if all the other Worlds that are distant from the Sun, have Moons, 
+79    61            why should Mars only be excepted? <LS>Ah, Madam, said I, when you are a 
+79    61            little more dip'd in Philosophy, you will find exceptions in the very 
+79    61            best Systemes</LS> [].
+79    61            </P061>
+
+Behn (1688)
+
+79    59            <P059>
+79    59            [Page 125] []  Your Rocks, and your flying Birds, said the Marquiese, do 
+79    59            not at all satisfie me. I confess such objects wou'd be very pretty; but since Nature 
+79    59            has given so many Moons to Saturn and Iupiter; 'tis a sign, that they are absolutely
+79    59            necessary as well to Mars. I shou'd have been glad that all the Worlds distant from 
+79    59            the Sun, cou'd have had their Moons; and that Mars might not have been so 
+79    59            disagreeably [Page 126] excepted. Oh! Madam, said I, <LS> if you think it worth your 
+79    59            pains to make any further Progress in Philosophy, you must accustom your self to 
+79    59            such Exceptions </LS>.
+79    59            </P059>
+
+===============================================================================================
