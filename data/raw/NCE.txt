@@ -1,304 +1,0 @@
-NCE Non-Conforming Expression (due to domestication).docx
-
-Fontenelle (1686)
-
-2    2            <P002>
-2    2            [Page 16] [] Non, répliquai-je, il ne me sera point reproché que dans un Bois, à dix heures du soir, 
-2    2            j'aye parlé de [Page 17] Philosophie à <NCE> la plus aimable personne que je connoisse </NCE>. 
-2    2            Cherchez ailleurs des Philosophes.
-2    2            </P002>
-
-Domvill (1687)
-
-2    2            <P002>
-2    2            [Page 4] [] No, said I, it shall never be laid 
-2    2            to my charge, that in a Grove, at ten of clock at night, I 
-2    2            entertain'd the most lovely person in the World with nothing but 
-2    2            Philosophy, look out for such Philosophers elsewhere.
-2    2            </P002>
-
-Glanvill (1688)
-
-2    2            <P002>
-2    2            [Page 6] [] No, no, I reply'd, it shall never be said I was talking Philosophy at ten of the Clock at
-2    2            Night, to the most amiable Creature in the World, find your Philosophers somewhere else.
-2    3            </P003>
-
-Behn (1688)
-
-2    2            <P002>
-2    2            [Page 7] []. Ah, Madam, cry'd I, I shall never indure to be reproach'd with that neglect of my own
-2    2            happiness, that in a Grove at ten a Clock of the Night, I talk'd of nothing but Philosophy, 
-2    2            <NCE> to the greatest Beauty in the World</NCE>; no, Madam, search for Philosophy some where 
-2    5            else. 
-2    5            </P005>
-
-===========================================================================================
-===========
-
-Fontenelle (1686)
-
-2    3            <P003>
-2   3            [Page 18] [] avec une personne comme elle, qui ne savoit rien en matière <RW> de Physique
-2    3             </RW>, il faloit prendre les choses de bien loin, pour luy prouver que <NCE> la Terre pouvoit être 
-2    3            une Planète </NCE>; & les Planètes autant de Terres, & toutes les Etoiles des mondes. J'en revenois 
-2    3            toujours à luy dire qu'il auroit mieux valu s'entretenir de bagatelles comme toutes personnes
-2    3            raisonnable auroient fait en notre place. A la fin cependant, pour luy donner une idée 
-2    3            générale de la Philosophie, voicy le raisonnement dans lequel je [Page 19] me jettay.
-2    3            </P003>
-
-Domvill (1687)
-
-2    3            <P003>
-2    3            [Page 5] [] [W]ith such a person that knew nothing of Natural Philosophy, it was requisite to 
-2    3            go far about to make her apprehend that <NCE> the Earth might be a Planet </NCE>, and every 
-2    3           Star a World. So that I e'n told her again, it were much better to talk of trifles, as every reasonable
-2    3            person, were they in our place, would do. But at last, to give her a general Notion of Philosophy, 
-2    3            I began with her thus. All Philosophy, said I, is grounded on these two things, the Curiosity of our 
-2    3           Minds, and the Shortness of our Sight: For if you could see better than you do, you would discern 
-2    3           whether those Stars are Worlds or not Worlds, and on the other hand, if you were less curious, 
-2    3           <NCE> you would not care two pence </NCE> to know whether they were so or not: but we are 
-2    3            willing to know more than we can see, and there's the difficulty. [].
-2    3            </P003>
-
-Glanvill (1688)
-
-2    4            <P004>
-2    4            [Page 6] [] to a Person who understood nothing of <RW> Natural Philosophy </RW> [Page  7] you
-2    4            must go a great way about to prove that <NCE> the Earth may be a Planet </NCE>, the Planets so 
-2    4            many Earths, and all the Stars worlds; however to give her a general Notion of Philosophy, I at last 
-2    4            resolv'd on this Method. All Philosophy, said I, Madam, is founded upon two things, either that we 
-2    4           are too short sighted, or that we are too curious; for if our eyes were better than they are, we should 
-2    4           soon see whether the Stars were worlds or not; and if on the other side we were less curious, 
-2    4            <IIM> we should not care </IIM> whether the Stars are Worlds or not, which I think 
-2    4            is much to the same purpose. But the business is, we have a mind to know more than 
-2    4            we see [].
-2    4            </P004>
-
-
-Behn (1688)
-
-2    6           <P006>
-2    6           [Page 8] for to prove to her (who understood nothing of Natural Philosophy) that 
-2    6           <NCE>the Earth was a Planet</NCE>, and all the other Planets so many Earths,
-2   6     and all the Stars Worlds, it was necessary for the explaining my self, to bring my Arguments a 
-2     6           great way off; and therefore I still endeavoured to perswade her that 'twas much better 
-2     6           to pass the time in another manner of Conversation, which the most reasonable People in our 
-2     6           Circumstances would do; but I pleaded to no Purpose, and at last to satisfie her, and give her a
-2     6           general Idea of Philosophy, I made use of this way of arguing. 
-2     6           </P006>
-
-
-
-===========================================================================================
-==========
-
-Fontenelle (1686)
-
-6    6            <P006>
-6    6             [Page 29] [] <RW> Le Chariot </RW>, par exemple, que vous voyez 
-6    6            qui <NCE> est formé de ces [Page 30] sept Etoiles, a toujours été fait comme il est </NCE>, & 
-6    6            il le sera toûjours; mais la Lune est tantost proche du Soleil, tantost elle en est éloignée, & il 
-6    6            en va de même des autres Planètes. [].
-6    6            </P006>
-
-
-Domvill (1687)
-
-6    4            <P004>
-6    4            [Page 7] [] The <NCE> Waign </NCE>, for example, which you see is form'd of those seven 
-6    4            Stars, has ever been and ever shall be the same it is, but the Moon 
-6    4            [Page  8] is sometime nearer, sometime farther off from the Sun so it 
-6    4            is like wise with the other Planets. 
-6    4            </P004>
-
-Glanvill (1688)
-
-5    5            <P005>
-5    5            [Page 12] [] [F]or Example, <NCE> Charles's Wain </NCE> 
-5    5             which is compos'd of those seven Stars, hath been and ever 
-5    5            will be as it now is, tho' the Moon is sometimes nearer to the Sun, and 
-5    5            sometimes farther from it, and so it is with the rest of the Planets. [].
-5    5            </P005>
-
-Behn (1688)
-
-6    10            <P010>
-6    10            [Page 15] [] <RW> As for Example, <NCE>Charles's-Wain, or the Constellation of 
-6    10            the Great Bear,/NCE> </RW>, which you see, and which consists of Seven 
-6    10            Stars, has always been, and will still continue the same; but the Moon is sometimes 
-6    10            near the Sun, and sometimes at a great distance from it, and so through all the rest of the Planets
-6    10            []. 
-6    10            </P010>
-
-
-
-===========================================================================================
-====
-
-Fontenelle (1686)
-
-22    22            <P022>
-22    22            [Page 90] [] Suposons qu'il n'y ait jamais eu nul commerce entre <NCE> Paris & Saint-Denis 
-22    22            </NCE> , & qu'un Bourgeois de Paris, qui ne sera jamais sorty de sa Ville , soit sur les Tours 
-22    22            de <NCE> Notre Dame </NCE> , & voye <NCE> Saint-Denis </NCE> [Page 91] de loin; on luy 
-22    22            demandera s'il croit que <NCE> Saint-Denis <NCE> soit habité <SC> comme Paris </SC>. 
-22    22            </P022>
-
-
-
-Domvill (1687)
-
-22    17            <P017>
-22    17            [Page 22] [] Let us suppose that there was never any Commerce between Paris 
-22    17            and St. Denis (a Town about three miles from Paris) and that a 
-22    17            Burgess of Paris, who never stirr'd out of the Town, should from the 
-22    17            top of Nostre Dame see Saint Denis at a distance, the question is put 
-22    17            him, whether he believes that Saint Denis is inhabited as Paris is 
-22    17            </P017>
-
-Glanvill (1688)
-
-22    13            <P018>
-22    13            [Page 36] [] Suppose there had never been any Communication between <NCE> London 
-22    13            and Greenwich </NCE>, and a Cockney, who was never beyond the Walls of 
-22    13            London, saw Greenwich from the top of the Pyramid; you ask him if he believes 
-22    13            Greenwich is inhabited as London is? [].
-22    13            </P013>
-
-Behn (1688)
-
-22    18            <P018>
-22    18           [Page 42] [] Suppose then, there had never been any 
-22    18            Commerce between Paris and St. Denis, and that a Citizen of Paris, who had never been out of 
-22    18            that City, shou'd go up to the top of the 
-22    18            Steeple of our Lady, and shou'd view St. Denis at a distance, 
-22    18            and one shou'd ask him if he believ'd St. Denis to be inhabited [].
-22    18            </P018>
-
-===========================================================================================
-====
-
-Fontenelle (1686)
-
-40    40            <P040>
-40    40            [Page 161] [] Ne faut-il pas raisonner de la Lune comme de <NCE> Saint-Denis </NCE>? Non , 
-40    40            répondis-je , la Lune ne ressemble pas autant à la Terre que <NCE> Saint-Denis ressemble à 
-40    40            Paris </NCE>. 
-40    40            </P040>
-
-
-Domvill (1687)
-
-40    36            <P036>
-40    36            [Page 39] [] Are we not to argue of the Moon, as of St. Denis? No, said I, 
-40    36            the Moon is not so like the Earth, as St. Denis is to Paris. 
-
-40    36            </P036>
-
-Glanvill (1688)
-
-40    31            <P031>
-40    31            [Page 69] [] Are we not to consider the Moon as <NCE> Greenwhich </NCE>? No, 
-40    31            said I, the Moon doth not so much resemble the Earth, as <NCE> Greenwich doth 
-40    31            London</NCE> [].
-40    31            </P031>
-
-Behn (1688)
-
-40    31            <P031>
-40    31            [Page 72] [] : Must not we reason the same way of the Inhabitants of the Moon, as 
-40    31            we did of your St. Denis? Not at all, Madam, answer'd I; the Moon does  not so much 
-40    31            resemble the Earth, as St. Denis does Paris. [].
-40    31            </P031>
-
-===========================================================================================
-==========
-
-Fontenelle (1686)
-
-34    34            <P034>
-34    34            [Page 122] [] Mais, reprit- <IIM> elle </IIM>, je serois bien aise de savoir encore [Page 123] 
-34    34            plus en détail comment est fait le dedans du pays. Il n'est pas possible , répliquay-je , que <NCE> 
-34    34            Messieurs de l'Observatoire </NCE> vous en instruisent [].
-34    34            </P034>
-
-
-Domvill (1687)
-
-34    29            <P029>
-34    29            [Page 30] [] But, says she, I should be very much pleas'd to know more in 
-34    29            particular how the more inland part of the Country is made. It is not 
-34    29            possible, said I, that the <NCE> Gentlemen of the Observatory </NCE> should inform 
-34    29            you []
-34    29            </P029>
-
-Glanvill (1688)
-
-34    22            <P022>
-34    22            [Page 50] [] I must own then, said the <IIM> Countess </IIM>, they are very exact; 
-34    22             but what do they say to the inside of the Country? I would very fain know that. 
-34    22            'Tis impossible, I reply'd, <NCE> Mr. Flamsted </NCE> himself, <NCP> (one of the most 
-34    22            Learned Astronomers of our Age) </NCP> cannot inform you. []. 
-34    22            </P022>
-
-Behn (1688)
-
-34    25            <P025>
-34    25            [Page 56] [] But, reply'd the Marquiese, I shou'd be very well pleas'd to have a 
-34    25            farther Account of this Country. 'Tis impossible, reply'd I, that the nicest Observators 
-34    25            shou'd inform you [].
-34    25            </P025>
-
-===========================================================================================
-====
-
-Fontenelle (1686)
-
-73    73            <P073>
-73    73            [Page 270] [..]  Il y aura dans Jupiter des Astronomes , qui aprés avoir bien pris de la peine à 
-73    73            composer des Lunettes excellentes , aprés avoir choisy les plus belles Nuits pour 
-73    73            observer , auront enfin découvert dans les Cieux une petite Planete qu'ils 
-73    73            n'avoient jamais veüe. D'abord le <NCE> Journal des Savants </NCE> de ce Pays-là en parle ; 
-73    73            le Peuple de Jupiter , ou n'en entend point parler , ou n'en fait que rire. []
-73    73            </P073>
-
-
-Domvill (1687)
-
-73    67            <P067>
-73    67            	[Page 64] [] [T]here may be Astronomers in Iupiter, who having taken 
-73    67            pains to make excellent Telescopes, and choosing the fairest nights 
-73    67            for Observation, may at last have discover'd in the Heavens a little 
-73    67            Planet which they never saw before, presently the Iournal des Scivans 
-73    67            of that Country speaks of it; the people of Iupiter either hear 
-73    67            nothing of it, or only laugh at it. [] 
-73    67            </P067>
-
-Glanvill (1688)
-
-73    57            <P057>
-73    57            [Page 114] [] [W]e may reasonably conjecture, that there are Astronomers 
-73    57            in Jupiter, that after they have made the most curious Telescopes, and taken 
-73    57            the clearest Night for their observations, they may have discover'd a little Planet in the 
-73    57            Heavens, [Page  115] which they never saw before; if they publish their 
-73    57            discovery, most People know not what they mean, or laugh at 'em for 
-73    57            Fools [].
-73    57            </P057>
-
-Behn (1688)
-
-73    53            <P053>
-73    53            [Page 119] [] all we can imagine for our advantage, is, to suppose that there 
-73    53            are Astronomers in Iupiter, who after having taken a great deal of Pains, and 
-73    53            fitting excellent Telescopes; and having chosen a very clear Night for making the 
-73    53            Observation, they at last discover in the [Page 120] Heavens a little Planet, 
-73    53            they had never seen before; and streight they set it down in the <NCE> Philosophical 
-73    53            Transactions </NCE> of that Country. The rest of the Inhabitants of Iupiter , either never 
-73    53            hear of it, or laugh at it if they do [].
-73    53            </P053>
-
-===========================================================================================
- ===========================================================================================
-
-
