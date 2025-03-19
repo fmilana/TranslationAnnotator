@@ -1,0 +1,63 @@
+:root {
+    font-size: 20px; /* Increase from the default (usually 16px) */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+.table {
+    width: 100%;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.badge {
+    display: inline;
+}
+
+.highlight-text {
+    color: #212529;
+    /* background-color: #F9A825; */
+    background-color: #ffc800;
+}
+
+#comparisonTable tr td:nth-child(3) .highlight-text {
+    cursor: pointer;
+}
+
+#explanationPopup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333940;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    /* max-width: 700px; */
+    z-index: 1000;
+    display: none;
+}
+  
+#explanationPopup .close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+}
