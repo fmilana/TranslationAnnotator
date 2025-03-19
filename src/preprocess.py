@@ -51,7 +51,7 @@ def extract_paragraphs(xml_file):
 
 def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator):
     """Align paragraphs based on concordance mappings."""
-    aligned_paragraphs = []
+    aligned_chunks = []
 
     source_id_batch = []
     translator_id_batch = []
@@ -67,7 +67,7 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
 
         if pd.notna(source_para_id) and pd.notna(translator_para_id):
             if i > 0:
-                aligned_paragraphs.append({
+                aligned_chunks.append({
                     'chunk_id': counter,
                     'source_ids': ', '.join(source_id_batch),
                     'target_ids': ', '.join(translator_id_batch),
@@ -98,7 +98,7 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
             translator_id_batch.append(translator_para_id)
 
     if source_para_batch or translator_para_batch:
-        aligned_paragraphs.append({
+        aligned_chunks.append({
             'chunk_id': counter,
             'source_ids': ', '.join(source_id_batch),
             'target_ids': ', '.join(translator_id_batch),
@@ -106,7 +106,7 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
             'target_en_manual': ' '.join(translator_para_batch)
         })
 
-    return aligned_paragraphs
+    return aligned_chunks
 
 
 if __name__ == '__main__':
@@ -121,11 +121,11 @@ if __name__ == '__main__':
         translator_paragraphs = extract_paragraphs(f'data/raw/{translator}_tagged.xml')
 
         # Align paragraphs based on the concordance file
-        aligned_paragraphs = align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator)
+        aligned_chunks = align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator)
 
         # Save the output as JSON
-        output_data = {'paragraphs': aligned_paragraphs}
+        output_data = {'chunks': aligned_chunks}
         with open(f'data/processed/{translator}_aligned.json', 'w', encoding='utf-8') as file:
             json.dump(output_data, file, ensure_ascii=False, indent=2)
 
-        print(f'✅ Created aligned data for {translator} with {len(aligned_paragraphs)} paragraph pairs')
+        print(f'✅ Created aligned data for {translator} with {len(aligned_chunks)} chunk pairs')

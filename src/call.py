@@ -70,14 +70,14 @@ for tag in tags:
 
         results = []
 
-        # Process each paragraph
-        # paragraphs = data['paragraphs']
-        paragraphs = [data['paragraphs'][5], data['paragraphs'][47]]  # For testing, use only the two paragraphs
+        # Process each chunk
+        chunks = data['chunks']
+        # chunks = [data['chunks'][5], data['chunks'][47]]  # For testing, use only the two chunks
 
-        for paragraph in tqdm(paragraphs, desc=f"Processing {translator}", unit="paragraph"):
+        for chunk in tqdm(chunks, desc=f"Processing {translator}", unit="chunk"):
             # Replace placeholders in the user prompt
-            user_prompt = user_prompt_template.replace('{SOURCE_FR}', untag(paragraph['source_fr_manual']))\
-                                            .replace('{TARGET_EN_UNTAGGED}', untag(paragraph['target_en_manual']))
+            user_prompt = user_prompt_template.replace('{SOURCE_FR}', untag(chunk['source_fr_manual']))\
+                                            .replace('{TARGET_EN_UNTAGGED}', untag(chunk['target_en_manual']))
 
             # dump system and user prompts to file to check
             # with open(f"data/results/{translator}_{tag}_system_prompt.txt", "w", encoding="utf-8") as file:
@@ -110,24 +110,24 @@ for tag in tags:
                 explanation = response_json.get('explanation', '')
             except json.JSONDecodeError:
                 # If not a valid JSON, print the raw response content
-                print(f'Error parsing JSON for paragraph {paragraph["source_fr"]}: {response_content}')
+                print(f'Error parsing JSON for chunk {chunk["chunk_id"]}: {response_content}')
                 target_en_ai = explanation = ''  # Set as empty if JSON parsing fails
 
-            # Append the result for this paragraph
+            # Append the result for this chunk
             results.append({
-                'chunk_id': paragraph['chunk_id'],
-                'source_ids': paragraph['source_ids'],
-                'target_ids': paragraph['target_ids'],
-                'source_fr_manual': paragraph['source_fr_manual'],
-                # 'source_fr_ai': paragraph['source_fr_ai'],
-                'target_en_manual': paragraph['target_en_manual'],
+                'chunk_id': chunk['chunk_id'],
+                'source_ids': chunk['source_ids'],
+                'target_ids': chunk['target_ids'],
+                'source_fr_manual': chunk['source_fr_manual'],
+                # 'source_fr_ai': chunk['source_fr_ai'],
+                'target_en_manual': chunk['target_en_manual'],
                 'target_en_ai': target_en_ai,
                 'explanation': explanation
             })
 
         # Save results to file
-        with open(f'data/results/{translator}_{tag}_results.json', 'w') as file:
-            json.dump({'paragraphs': results}, file, indent=2)
+        with open(f'data/results/{translator}_{tag}.json', 'w') as file:
+            json.dump({'chunks': results}, file, indent=2)
 
         # Print a message indicating the results were saved
         print(f"✅ Saved results for {translator} with tag <{tag}>")
