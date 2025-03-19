@@ -2,23 +2,55 @@ import json
 import pandas as pd
 import re
 import chardet
+import xml.etree.ElementTree as ET
 
 
-def clean_text(text):
-    # Remove all tags
-    text = re.sub(r'<.*?>', '', text)
-    # Remove page numbers in the format [Page 32] and manual annotations
-    text = re.sub(r'\[.*?\]', '', text, flags=re.DOTALL)
-    # Fix extra spaces
-    text = re.sub(r'\s+', ' ', text)         # Replace multiple spaces with single space
+# Used in call.py
+def untag(text):
+    """Remove all XML tags except for paragraph IDs."""
+    text = re.sub(r'<(?!/?P\d{3}>)[^>]+>', '', text)  # Remove all tags except <Pxxx> ones
+    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with single space
     text = re.sub(r'\s+([.,;:!?])', r'\1', text)  # Remove space before punctuation
-    text = re.sub(r'^\s+|\s+$', '', text)    # Remove leading/trailing spaces
-    
+    text = re.sub(r'^\s+|\s+$', '', text)  # Remove leading/trailing spaces
     return text
 
 
-def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator):
+def clean_text(text):
+    """Remove annotations like [Page 32] and fix spaces."""
+    text = re.sub(r'\[.*?\]', '', text, flags=re.DOTALL)  # Remove page numbers and annotations
+    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with single space
+    text = re.sub(r'\s+([.,;:!?])', r'\1', text)  # Remove space before punctuation
+    text = re.sub(r'^\s+|\s+$', '', text)  # Remove leading/trailing spaces
+    return text
 
+
+def extract_paragraphs(xml_file):
+    """Extract paragraphs from an XML file, keeping paragraph IDs and inline XML tags."""
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+    
+    def get_text_with_tags(element):
+        """Recursively extract text including nested XML tags."""
+        text = element.text or ''  # Start with the main text (before any children)
+        for child in element:
+            text += f'<{child.tag}>{get_text_with_tags(child)}</{child.tag}>'  # Recursively process child elements
+            if child.tail:  
+                text += child.tail  # Append any text after the child tag
+        return text.strip()
+    
+    paragraphs = []
+    for para in root:  # Iterate over paragraph elements (e.g., <P021>)
+        para_id = para.tag  # Extract paragraph ID (e.g., P021)
+        para_text = get_text_with_tags(para)  # Extract full text, including nested tags
+        para_text = clean_text(para_text)  # Apply text cleaning
+        
+        paragraphs.append(f'<{para_id}>{para_text}</{para_id}>')  # Preserve paragraph ID formatting
+
+    return paragraphs
+
+
+def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator):
+    """Align paragraphs based on concordance mappings."""
     aligned_paragraphs = []
 
     source_id_batch = []
@@ -27,31 +59,35 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
     source_para_batch = []
     translator_para_batch = []
 
+    counter = 0
+
     for i, row in concordance_df.iterrows():
-        source_para_id = row['fontenelle'] 
+        source_para_id = row['fontenelle']
         translator_para_id = row[translator]
 
         if pd.notna(source_para_id) and pd.notna(translator_para_id):
             if i > 0:
-                # Append concatenated batches to the aligned paragraphs
                 aligned_paragraphs.append({
+                    'chunk_id': counter,
                     'source_ids': ', '.join(source_id_batch),
                     'target_ids': ', '.join(translator_id_batch),
-                    'source_fr': ' '.join(source_para_batch),
-                    'target_en_untagged': ' '.join(translator_para_batch),
+                    'source_fr_manual': ' '.join(source_para_batch),
+                    'target_en_manual': ' '.join(translator_para_batch)
                 })
-                # Reset the batches
                 source_para_batch = []
                 translator_para_batch = []
                 source_id_batch = []
                 translator_id_batch = []
 
-            # Add current paragraphs to batches
+                counter += 1
+
             source_para_batch.append(source_paragraphs[int(source_para_id[1:]) - 1])
             translator_para_batch.append(translator_paragraphs[int(translator_para_id[1:]) - 1])
 
             source_id_batch.append(source_para_id)
             translator_id_batch.append(translator_para_id)
+
+            
 
         elif pd.notna(source_para_id):
             source_para_batch.append(source_paragraphs[int(source_para_id[1:]) - 1])
@@ -61,63 +97,35 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
             translator_para_batch.append(translator_paragraphs[int(translator_para_id[1:]) - 1])
             translator_id_batch.append(translator_para_id)
 
-    # Append any remaining paragraphs
     if source_para_batch or translator_para_batch:
         aligned_paragraphs.append({
+            'chunk_id': counter,
             'source_ids': ', '.join(source_id_batch),
             'target_ids': ', '.join(translator_id_batch),
-            'source_fr': ' '.join(source_para_batch),
-            'target_en_untagged': ' '.join(translator_para_batch)
+            'source_fr_manual': ' '.join(source_para_batch),
+            'target_en_manual': ' '.join(translator_para_batch)
         })
 
     return aligned_paragraphs
 
 
-concordance_df = pd.read_csv('data/raw/concordance.csv')
+if __name__ == '__main__':
+    concordance_df = pd.read_csv('data/raw/concordance.csv')
 
-with open('data/raw/fontenelle_tagged.txt', 'rb') as file:
-    raw_source_text = file.read()
-    result = chardet.detect(raw_source_text)
-    encoding = result['encoding']
+    # Extract paragraphs from the source XML
+    source_paragraphs = extract_paragraphs('data/raw/fontenelle_tagged.xml')
 
-with open(f'data/raw/fontenelle_tagged.txt', 'r', encoding=encoding) as file:
-    raw_source_text = file.read()
+    translators = ['behn', 'domvill', 'glanville']
 
-source_paragraphs = []
-paragraph_pattern = re.compile(r'<(P\d+)>(.*?)</\1>', re.DOTALL)
+    for translator in translators:
+        translator_paragraphs = extract_paragraphs(f'data/raw/{translator}_tagged.xml')
 
-for match in paragraph_pattern.finditer(raw_source_text):
-    para_text = clean_text(match.group(2))
-    source_paragraphs.append(para_text)
+        # Align paragraphs based on the concordance file
+        aligned_paragraphs = align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator)
 
-translators = [
-    'behn', 
-    'domvill', 
-    'glanville'
-]
+        # Save the output as JSON
+        output_data = {'paragraphs': aligned_paragraphs}
+        with open(f'data/processed/{translator}_aligned.json', 'w', encoding='utf-8') as file:
+            json.dump(output_data, file, ensure_ascii=False, indent=2)
 
-# Process each translator
-for translator in translators:
-    with open(f'data/raw/{translator}_tagged.txt', 'rb') as file:
-        raw_translator_text = file.read()
-        result = chardet.detect(raw_translator_text)
-        encoding = result['encoding']
-
-    with open(f'data/raw/{translator}_tagged.txt', 'r', encoding=encoding) as file:
-        raw_translator_text = file.read()
-
-    translator_paragraphs = []
-    for match in paragraph_pattern.finditer(raw_translator_text):
-        para_id = match.group(1)
-        para_text = clean_text(match.group(2))
-        translator_paragraphs.append(para_text)
-
-    # Call the function to process the alignment
-    aligned_paragraphs = align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator)
-
-    # Save the output
-    output_data = {'paragraphs': aligned_paragraphs}
-    with open(f'data/processed/{translator}_aligned.json', 'w', encoding='utf-8') as file:
-        json.dump(output_data, file, ensure_ascii=False, indent=2)
-
-    print(f'Created aligned data for {translator} with {len(aligned_paragraphs)} paragraph pairs')
+        print(f'✅ Created aligned data for {translator} with {len(aligned_paragraphs)} paragraph pairs')
