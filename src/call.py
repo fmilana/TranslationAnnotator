@@ -106,12 +106,12 @@ for tag in tags:
             try:
                 # Try parsing the response content as JSON
                 response_json = json.loads(response_content)
-                target_en_ai = response_json.get('target_en_ai', '')
-                explanation = response_json.get('explanation', '')
+                segments = response_json.get('segments', '')
+                explanations = response_json.get('explanations', '')
             except json.JSONDecodeError:
                 # If not a valid JSON, print the raw response content
                 print(f'Error parsing JSON for chunk {chunk["chunk_id"]}: {response_content}')
-                target_en_ai = explanation = ''  # Set as empty if JSON parsing fails
+                segments = explanations = ''  # Set as empty if JSON parsing fails
 
             # Append the result for this chunk
             results.append({
@@ -121,8 +121,8 @@ for tag in tags:
                 'source_fr_manual': chunk['source_fr_manual'],
                 # 'source_fr_ai': chunk['source_fr_ai'],
                 'target_en_manual': chunk['target_en_manual'],
-                'target_en_ai': target_en_ai,
-                'explanation': explanation
+                'segments': segments,
+                'explanations': explanations
             })
 
         # Save results to file

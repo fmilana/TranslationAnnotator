@@ -13,17 +13,22 @@
 </head>
 <body class="bg-dark text-light">
 
-    <div class="container-fluid mt-4">
-        <!-- <h1 class="text-center">Translation Comparison</h1> -->
+    
 
+    <div class="container-fluid mt-4">
         <div class="table-responsive">
             <table class="table table-dark table-bordered mt-3">
                 <thead>
                     <tr>
                         <th scope="col">Source Text</th>
-                        <th scope="col">Manual Annotation on Target Text</th>
-                        <th id="aiCol" scope="col">AI-Generated Annotation on Target Text</th>
-                        <!-- <th scope="col">Explanation</th> -->
+                        <th scope="col">
+                            Manual Annotation on Target Text
+                            <div class="count-badge" id="manualCount">(No occurrences)</div>
+                        </th>
+                        <th scope="col">
+                            AI-Generated Annotation on Target Text
+                            <div class="count-badge" id="aiCount">(No occurrences)</div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="comparisonTable">

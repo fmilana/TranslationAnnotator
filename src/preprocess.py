@@ -5,7 +5,6 @@ import chardet
 import xml.etree.ElementTree as ET
 
 
-# Used in call.py
 def untag(text):
     """Remove all XML tags except for paragraph IDs."""
     text = re.sub(r'<(?!/?P\d{3}>)[^>]+>', '', text)  # Remove all tags except <Pxxx> ones
