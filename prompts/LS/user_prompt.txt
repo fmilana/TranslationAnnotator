@@ -1,3 +1,5 @@
+## Language Simplification (LS) Task
+
 Language Simplification (LS) occurs when a translator deliberately modifies the original text to enhance readability by:
   - Simplifying complex sentence structures
   - Using more common vocabulary
@@ -7,38 +9,61 @@ Language Simplification (LS) occurs when a translator deliberately modifies the 
 Task: Identify only clear and deliberate instances of language simplification (LS) in the provided English translation. Instead of inserting tags directly, list each simplified text segment separately in your response. Only include cases where the translator actively reduced complexity (e.g., breaking up complex phrases, omitting significant details, or replacing sophisticated terms with simpler ones).
 
 Instructions:
-  - Compare the French source and English translation carefully.
+  - Compare the source (French) and target_untagged (English) texts carefully.
   - Do not identify differences that arise purely from natural linguistic differences between English and French (e.g., English generally using shorter sentences).
   - Only identify segments if the translator has actively simplified the structure, vocabulary, or omitted details that impact readability.
-  - For each identified instance, provide the exact text segment from the English translation and a corresponding explanation.
-  - The text in the segment needs to be exactly as it appears in the text. Do not modify any part of the text. Do not add or remove punctuation.
+  - For each identified instance, provide:
+    - The exact text segment from the source (French).
+    - The corresponding text segment from the target_untagged (English).
+    - An explanation of how the translation simplifies the original.
+  
+  **CRITICAL MATCHING REQUIREMENT:**
+  - You MUST copy segments CHARACTER-BY-CHARACTER without any modifications
+  - When selecting a segment, perform a binary search to ensure the exact string exists in the text
+  - Copy segments directly from the text provided to you WITHOUT ANY CHANGES:
+    - DO NOT "correct" spacing (keep all extra spaces exactly as they appear)
+    - DO NOT normalize punctuation in any way (keep exactly as is)
+    - DO NOT remove trailing commas, periods, or other punctuation
+    - DO NOT add or remove even a single character
+    - DO NOT "clean up" the text in any way
+  - After extracting each segment, verify it by checking that an exact match can be found in the original text
+  - If you cannot find an exact, character-by-character match for your segment, adjust your selection
+
   - Each explanation should identify exactly what was changed in the translation to make it simpler.
-  - If no simplification instances are identified, return an empty array for both segments and explanations.
-  - Do not include any special characters like "\n" in the explanations.
-  - Output your response in valid JSON format with "segments" and "explanations" as arrays of strings.
-  - The "segments" array should contain the exact text portions from the translation that represent simplifications.
-  - The "explanations" array should contain one explanation entry for each segment, in matching order.
+  - If no simplification instances are identified, return an empty array for both source_segments, target_segments, and explanations.
+  - Do not include any special characters like \n in the explanations.
+  - Output your response in valid JSON format with the following keys:
+    - "source_segments" (array of French text portions that were simplified)
+    - "target_segments" (array of corresponding English text portions)
+    - "explanations" (array of explanations, each corresponding to a pair of source and target segments)
   - Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
+
+## Examples
 
 Example 1:
 
 Input:
 {
-  "source_fr": "Le Soleil est au centre de l'Univers, & là il est immobile; aprés luy qu'est-ce qui suit? C'est Mercure, répondis-je, il tourne autour du Soleil, en sorte que le Soleil est le centre du Cercle que Mercure décrit. Au-dessus de Mercure est Vénus, qui tourne de mesme autour du Soleil. Ensuite vient la Terre, qui estant plus élevée que Mercure & Venus, décrit autour du Soleil un plus grand Cercle que ces Planetes. Enfin suivent Mars, Jupiter, Saturne, selon l'ordre que je vous les nomme, & vous voyez bien que Saturne doit décrire autour du Soleil le plus grand Cercle de tous; aussi employe-t-il plus de temps qu'aucune autre Planete à faire sa révolution. Et la Lune? vous l'oubliez, interrompit-elle. Je la retrouveray bien, repris-je. La Lune tourne autour de la Terre, & ne l'abandonne point; mais comme la Terre avance toûjours dans le Cercle qu'elle décrit autour du Soleil, la Lune la suit en tournant toûjours autour d'elle, & si elle tourne autour du Soleil, ce n'est que pour ne point quitter la Terre.", 
-  "target_en_untagged": "You place the Sun unmoveable in the Centre of the Universe; Pray, what follows next? Mercury, said I, who turns round the Sun; so that the Sun is in the Centre of 7 12 the Circle he describes: And above Mercury, Venus; who turns also round the Sun: Next comes the Earth; which being more elivated than Mercury, or Venus, describes a Circle of a greater Circumference that those two Planets: Last, come Mars, Iupiter and Saturn, in their order, as I have nam'd 'em: So that you see easily, that Saturn ought to make the greatest Circle round the Sun; it is therefore that Saturn takes more time to make his Revolution, than any other Planet. Ah, but, said the Marquiese, interrupting me, you forget the Moon. Do not fear, said I, Madam; I shall soon find her again. The Moon turns round the Earth, and never leaves it; and as the Earth moves in the Circle it describes round the Sun, the Moon follows the Earth in turning round it; and if the Moon do move round the Sun, it is only because she will not abandon the Earth."
+  "source": "Le Soleil est au centre de l'Univers, & là il est immobile; aprés luy qu'est-ce qui suit? C'est Mercure, répondis-je, il tourne autour du Soleil, en sorte que le Soleil est le centre du Cercle que Mercure décrit. Au-dessus de Mercure est Vénus, qui tourne de mesme autour du Soleil. Ensuite vient la Terre, qui estant plus élevée que Mercure & Venus, décrit autour du Soleil un plus grand Cercle que ces Planetes. Enfin suivent Mars, Jupiter, Saturne, selon l'ordre que je vous les nomme, & vous voyez bien que Saturne doit décrire autour du Soleil le plus grand Cercle de tous; aussi employe-t-il plus de temps qu'aucune autre Planete à faire sa révolution. Et la Lune? vous l'oubliez, interrompit-elle. Je la retrouveray bien, repris-je. La Lune tourne autour de la Terre, & ne l'abandonne point; mais comme la Terre avance toûjours dans le Cercle qu'elle décrit autour du Soleil, la Lune la suit en tournant toûjours autour d'elle, & si elle tourne autour du Soleil, ce n'est que pour ne point quitter la Terre.", 
+  "target_untagged": "You place the Sun unmoveable in the Centre of the Universe; Pray, what follows next? Mercury, said I, who turns round the Sun; so that the Sun is in the Centre of 7 12 the Circle he describes: And above Mercury, Venus; who turns also round the Sun: Next comes the Earth; which being more elivated than Mercury, or Venus, describes a Circle of a greater Circumference that those two Planets: Last, come Mars, Iupiter and Saturn, in their order, as I have nam'd 'em: So that you see easily, that Saturn ought to make the greatest Circle round the Sun; it is therefore that Saturn takes more time to make his Revolution, than any other Planet. Ah, but, said the Marquiese, interrupting me, you forget the Moon. Do not fear, said I, Madam; I shall soon find her again. The Moon turns round the Earth, and never leaves it; and as the Earth moves in the Circle it describes round the Sun, the Moon follows the Earth in turning round it; and if the Moon do move round the Sun, it is only because she will not abandon the Earth."
 }
 
 Output:
 {
-  "segments": [
+  "source_segments": [
+    "Le Soleil est au centre de l'Univers, & là il est immobile; aprés luy qu'est-ce qui suit?",
+    "& vous voyez bien que Saturne doit décrire autour du Soleil le plus grand Cercle de tous; aussi employe-t-il plus de temps qu'aucune autre Planete à faire sa révolution.",
+    "Je la retrouveray bien, repris-je."
+  ],
+  "target_segments": [
     "You place the Sun unmoveable in the Centre of the Universe; Pray, what follows next?",
     "So that you see easily, that Saturn ought to make the greatest Circle round the Sun; it is therefore that Saturn takes more time to make his Revolution, than any other Planet.",
-    "I shall soon find her again. The Moon turns round the Earth, and never leaves it;"
+    "Do not fear, said I, Madam; I shall soon find her again."
   ],
   "explanations": [
-    "The complex French phrasing 'Le Soleil est au centre de l'Univers, & là il est immobile; aprés luy qu'est-ce qui suit?' has been simplified to a more direct question form in English, making it more conversational and easier to follow.",
-    "The translator simplified the sentence structure by using more direct phrasing than the French original. The phrase '& vous voyez bien que Saturne doit décrire autour du Soleil le plus grand Cercle de tous; aussi employe-t-il plus de temps qu'aucune autre Planete à faire sa révolution' has been rendered in a more straightforward manner with 'you see easily' which simplifies the formal French construction.",
-    "The French phrase 'Je la retrouveray bien, repris-je' has been simplified and expanded to 'I shall soon find her again' and connected directly to the explanation about the Moon, creating a more straightforward flow than the original text."
+    "The complex French phrasing has been simplified into a more direct question form in English, making it more conversational and easier to follow.",
+    "The translator simplified the sentence structure by using more direct phrasing than the French original. The phrase 'vous voyez bien' has been rendered in a more straightforward manner with 'you see easily,' simplifying the formal French construction.",
+    "The French phrase 'Je la retrouveray bien' has been expanded and made clearer in English, creating a smoother flow with the addition of 'Do not fear' and 'Madam' for context."
   ]
 }
 
@@ -46,27 +71,32 @@ Example 2:
 
 Input:
 {
-  "source_fr": "Je ne me contente, reprit-elle, ny de vos Rochers, ni de vos Oiseaux. Cela ne laisseroit pas d'être joly, mais puis que la Nature a donné tant de Lunes à Saturne & à Jupiter, c'est une marque qu'il faut des Lunes. J'eusse êté bien-aise que tous les Mondes éloignez du Soleil en eussent eu, si Mars ne nous fût point venu faire une exception desagreable. Ah! vraiment, répliquay-je, si vous vous mêliez de Philosophie plus que vous ne faites il faudroit bien que vous vous accoûtumassiez à voir des exceptions dans les meilleurs Sistêmes",
-  "target_en_untagged": "Your Rocks, and your flying Birds, said the Marquiese, do not at all satisfie me. I confess such objects wou'd be very pretty; but since Nature has given so many Moons to Saturn and Iupiter; 'tis a sign, that they are absolutely necessary as well to Mars. I shou'd have been glad that all the Worlds distant from the Sun, cou'd have had their Moons; and that Mars might not have been so disagreeably excepted. Oh! Madam, said I, if you think it worth your pains to make any further Progress in Philosophy, you must accustom your self to such Exceptions."
+  "source": "Je ne me contente, reprit-elle, ny de vos Rochers, ni de vos Oiseaux. Cela ne laisseroit pas d'être joly, mais puis que la Nature a donné tant de Lunes à Saturne & à Jupiter, c'est une marque qu'il faut des Lunes. J'eusse êté bien-aise que tous les Mondes éloignez du Soleil en eussent eu, si Mars ne nous fût point venu faire une exception desagreable. Ah! vraiment, répliquay-je, si vous vous mêliez de Philosophie plus que vous ne faites il faudroit bien que vous vous accoûtumassiez à voir des exceptions dans les meilleurs Sistêmes",
+  "target_untagged": "Your Rocks, and your flying Birds, said the Marquiese, do not at all satisfie me. I confess such objects wou'd be very pretty; but since Nature has given so many Moons to Saturn and Iupiter; 'tis a sign, that they are absolutely necessary as well to Mars. I shou'd have been glad that all the Worlds distant from the Sun, cou'd have had their Moons; and that Mars might not have been so disagreeably excepted. Oh! Madam, said I, if you think it worth your pains to make any further Progress in Philosophy, you must accustom your self to such Exceptions."
 }
 
 Output:
 {
-  "segments": [
+  "source_segments": [
+    "Je ne me contente, reprit-elle, ny de vos Rochers, ni de vos Oiseaux.",
+    "c'est une marque qu'il faut des Lunes.",
+    "si vous vous mêliez de Philosophie plus que vous ne faites il faudroit bien que vous vous accoûtumassiez à voir des exceptions dans les meilleurs Sistêmes"
+  ],
+  "target_segments": [
     "Your Rocks, and your flying Birds, said the Marquiese, do not at all satisfie me.",
     "'tis a sign, that they are absolutely necessary as well to Mars.",
-    "if you think it worth your pains to make any further Progress in Philosophy, you must accustom your self to such Exceptions"
+    "if you think it worth your pains to make any further Progress in Philosophy, you must accustom your self to such Exceptions."
   ],
   "explanations": [
-    "The original French phrase 'Je ne me contente, reprit-elle, ny de vos Rochers, ni de vos Oiseaux' uses a more formal construction with double negation. The English translation simplifies this to a more direct statement with a clearer structure.",
-    "The French phrase 'c'est une marque qu'il faut des Lunes' has been simplified and expanded to make the meaning more explicit with 'tis a sign, that they are absolutely necessary as well to Mars', making the inference clearer to the reader.",
-    "The sentence structure was simplified by converting the complex French construction 'si vous vous mêliez de Philosophie plus que vous ne faites il faudroit bien que vous vous accoûtumassiez à voir des exceptions' to a more straightforward conditional statement in English, removing several nested clauses and making it easier to follow."
+    "The original French phrase uses a more formal construction with double negation. The English translation simplifies this to a more direct statement with a clearer structure.",
+    "The French phrase has been simplified and expanded to make the meaning more explicit, making the inference clearer to the reader.",
+    "The sentence structure was simplified by converting the complex French construction to a more straightforward conditional statement in English, removing several nested clauses and making it easier to follow."
   ]
 }
 
 Now process the following input data:
 
 {
-  "source_fr": "{SOURCE_FR}",
-  "target_en_untagged": "{TARGET_EN_UNTAGGED}"
+  "source": "{SOURCE_FR}",
+  "target_untagged": "{TARGET_EN_UNTAGGED}"
 }

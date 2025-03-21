@@ -76,8 +76,8 @@ for tag in tags:
 
         for chunk in tqdm(chunks, desc=f"Processing {translator}", unit="chunk"):
             # Replace placeholders in the user prompt
-            user_prompt = user_prompt_template.replace('{SOURCE_FR}', untag(chunk['source_fr_manual']))\
-                                            .replace('{TARGET_EN_UNTAGGED}', untag(chunk['target_en_manual']))
+            user_prompt = user_prompt_template.replace('{SOURCE_FR}', untag(chunk['source_manual']))\
+                                              .replace('{TARGET_EN_UNTAGGED}', untag(chunk['target_manual']))
 
             # dump system and user prompts to file to check
             # with open(f"data/results/{translator}_{tag}_system_prompt.txt", "w", encoding="utf-8") as file:
@@ -106,22 +106,23 @@ for tag in tags:
             try:
                 # Try parsing the response content as JSON
                 response_json = json.loads(response_content)
-                segments = response_json.get('segments', '')
+                source_segments = response_json.get('source_segments', '')
+                target_segments = response_json.get('target_segments', '')
                 explanations = response_json.get('explanations', '')
             except json.JSONDecodeError:
                 # If not a valid JSON, print the raw response content
                 print(f'Error parsing JSON for chunk {chunk["chunk_id"]}: {response_content}')
-                segments = explanations = ''  # Set as empty if JSON parsing fails
+                source_segments = target_segments = explanations = ''  # Set as empty if JSON parsing fails
 
             # Append the result for this chunk
             results.append({
                 'chunk_id': chunk['chunk_id'],
                 'source_ids': chunk['source_ids'],
                 'target_ids': chunk['target_ids'],
-                'source_fr_manual': chunk['source_fr_manual'],
-                # 'source_fr_ai': chunk['source_fr_ai'],
-                'target_en_manual': chunk['target_en_manual'],
-                'segments': segments,
+                'source_manual': chunk['source_manual'],
+                'target_manual': chunk['target_manual'],
+                'source_segments': source_segments,
+                'target_segments': target_segments,
                 'explanations': explanations
             })
 

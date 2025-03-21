@@ -70,8 +70,8 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
                     'chunk_id': counter,
                     'source_ids': ', '.join(source_id_batch),
                     'target_ids': ', '.join(translator_id_batch),
-                    'source_fr_manual': ' '.join(source_para_batch),
-                    'target_en_manual': ' '.join(translator_para_batch)
+                    'source_manual': ' '.join(source_para_batch),
+                    'target_manual': ' '.join(translator_para_batch)
                 })
                 source_para_batch = []
                 translator_para_batch = []
@@ -101,8 +101,8 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
             'chunk_id': counter,
             'source_ids': ', '.join(source_id_batch),
             'target_ids': ', '.join(translator_id_batch),
-            'source_fr_manual': ' '.join(source_para_batch),
-            'target_en_manual': ' '.join(translator_para_batch)
+            'source_manual': ' '.join(source_para_batch),
+            'target_manual': ' '.join(translator_para_batch)
         })
 
     return aligned_chunks
