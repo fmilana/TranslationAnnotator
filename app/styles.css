@@ -14,6 +14,31 @@
     display: flex;
     flex-direction: column;
   }
+
+  /* scrollbar */
+  .overlay-scrollbar {
+    overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  }
+
+  /* For older browsers that support -webkit scrollbars */
+  ::-webkit-scrollbar {
+    width: 12px; 
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
   
   .navbar {
     position: fixed;
@@ -21,7 +46,26 @@
     left: 0;
     right: 0;
     z-index: 1030;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
     /* No scrollbar attached to navbar */
+  }
+
+  .navbar-text {
+    color: white;
+  }
+
+  #selectedTranslator {
+    color: white;
+  }
+
+  #selectedTag {
+    color: white;
+  }
+
+  .dropdown-toggle::after {
+    color: white;
+    border-top-color: white;
   }
   
   .navbar-shadow {
@@ -49,7 +93,7 @@
   }
 
   .content-wrapper {
-    margin-top: 56px; /* Match your navbar height */
+    margin-top: 3.5rem; /* Match your navbar height */
     height: calc(100vh - 56px); /* Viewport height minus navbar height */
     overflow-y: auto; /* This element gets the scrollbar */
     flex: 1;
@@ -116,7 +160,7 @@
   #explanationPopup {
     position: fixed;
     bottom: 15px;
-    right: 30px;
+    right: 43px;
     background-color: #dedede;
     border: 1px solid #212529;
     border-radius: 5px;

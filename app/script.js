@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Create a style element
+  const style = document.createElement('style');
+
   let darkMode = true;
   const tag = "LS";
   
@@ -29,9 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Set dark mode styles
         document.body.classList.add("bg-dark");
-        console.log(1);
         document.getElementById("comparisonTable").classList.add("table-dark");
-        console.log(2);
         document.getElementById("aiCount").classList.add("dark-mode");
         document.getElementById("manualCount").classList.add("dark-mode");
         if (document.getElementById("explanationPopup")) {
