@@ -3,7 +3,8 @@ import json
 import logging
 from preprocess import untag
 from dotenv import load_dotenv
-from openai import OpenAI
+# from openai import OpenAI
+from anthropic import Anthropic
 from tenacity import (
     retry,
     stop_after_attempt,
@@ -19,14 +20,16 @@ from tqdm import tqdm
 # Define a function to retry with exponential backoff
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def completion_with_backoff(**kwargs):
-    return client.chat.completions.create(**kwargs)
+    # return client.chat.completions.create(**kwargs) # openai
+    return client.messages.create(**kwargs) # anthropic
 
 
 # Load environment variables
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 # Set API key for OpenAI
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+client = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
 if not client.api_key:
     raise ValueError('API key not found. Please check your .env file.')
 
@@ -35,8 +38,11 @@ if not client.api_key:
 # exit()
 
 # Read the system prompt from file
-with open('prompts/system_prompt.txt', 'r') as file:
-    system_prompt_template = file.read()
+# with open('prompts/system_prompt.txt', 'r') as file:
+#     system_prompt_template = file.read()
+
+with open(f'prompts/user_prompt.txt') as file:
+    user_prompt_template = file.read()
 
 # Define tags
 tags = {
@@ -57,11 +63,14 @@ translators = [
 
 # Iterate over tags and translators
 for tag in tags:
-    system_prompt = system_prompt_template.replace('{TAG}', tag).replace('{TAG_NAME}', tags[tag])
+    with open(f'prompts/system_prompt_{tag}.txt', 'r') as file:
+        system_prompt = file.read()
+
+    # system_prompt = system_prompt_template.replace('{TAG}', tag).replace('{TAG_NAME}', tags[tag])
 
     # Read the user prompt template
-    with open(f'prompts/user_prompt_{tag}.txt') as file:
-        user_prompt_template = file.read()
+    # with open(f'prompts/user_prompt_{tag}.txt') as file:
+    #     user_prompt_template = file.read()
 
     for translator in translators:
         # Read the processed data for the translator
@@ -71,8 +80,8 @@ for tag in tags:
         results = []
 
         # Process each chunk
-        chunks = data['chunks']
-        # chunks = [data['chunks'][5], data['chunks'][47]]  # For testing, use only the two chunks
+        # chunks = data['chunks']
+        chunks = [data['chunks'][5], data['chunks'][47]]  # For testing, use only the two chunks
 
         for chunk in tqdm(chunks, desc=f"Processing {translator}", unit="chunk"):
             # Replace placeholders in the user prompt
@@ -87,21 +96,29 @@ for tag in tags:
             # exit()
 
             response = completion_with_backoff(
-                model='gpt-4o', 
+                # model='gpt-4o', # openai
+                model='claude-3-7-sonnet-latest', # anthropic
+                max_tokens=4096, # anthropic
+                system = system_prompt, # anthropic
                 messages=[
-                    {'role': 'system', 'content': system_prompt},
-                    {'role': 'user', 'content': user_prompt}
+                    # { # OpenAI
+                    #     'role': 'system', 
+                    #     'content': system_prompt
+                    # },
+                    {
+                        'role': 'user', 
+                        'content': user_prompt
+                    }
                 ]
             )
 
             # Extract the response content
-            response_content = response.choices[0].message.content
+            # response_content = response.choices[0].message.content # openai
+            response_content = response.content[0].text # anthropic
 
             # dump response_content to file
             # with open(f"data/results/{translator}_{tag}_response_content.txt", "w", encoding="utf-8") as file:
             #     file.write(response_content)
-
-            response_content = response_content[7:-3] # remove the first 7 and last 3 characters
 
             try:
                 # Attempt to parse the response as JSON

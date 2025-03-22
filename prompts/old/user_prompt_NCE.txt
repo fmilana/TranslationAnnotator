@@ -17,26 +17,6 @@ Instructions:
     - The corresponding text segment from the target_untagged (English).
     - An explanation of how the translation domesticates the original cultural elements.
 
-**CRITICAL MATCHING REQUIREMENT**:
-  - You MUST copy segments CHARACTER-BY-CHARACTER without any modifications
-  - When selecting a segment, perform a binary search to ensure the exact string exists in the text
-  - Copy segments directly from the text provided to you WITHOUT ANY CHANGES:
-    - DO NOT "correct" spacing (keep all extra spaces exactly as they appear)
-    - DO NOT normalize punctuation in any way (keep exactly as is)
-    - DO NOT remove trailing commas, periods, or other punctuation
-    - DO NOT add or remove even a single character
-    - DO NOT "clean up" the text in any way
-  - After extracting each segment, verify it by checking that an exact match can be found in the original text
-  - If you cannot find an exact, character-by-character match for your segment, adjust your selection
-  - Each explanation should identify exactly what was changed in the translation to conform to target cultural values.
-  - If no domestication instances are identified, return an empty array for both source_segments, target_segments, and explanations.
-  - Do not include any special characters like \n in the explanations.
-  - Output your response in valid JSON format with the following keys:
-    - "source_segments" (array of French text portions that were domesticated)
-    - "target_segments" (array of corresponding English text portions)
-    - "explanations" (array of explanations, each corresponding to a pair of source and target segments)
-  - Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
-
 ## Examples
 
 Example 1:

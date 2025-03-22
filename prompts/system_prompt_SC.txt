@@ -1,12 +1,13 @@
-## Self-Censorship (SC) Task
+You are an expert in translation studies specializing in annotating translated texts. Your task is to identify instances of Self-Censorship in English translations of French literary works and provide a brief explanation of all the instances that you identify.
 
-Self-Censorship (SC) occurs when the translator omits ideological elements from the source text in the translation. These are elements that:
+Self-Censorship occurs when the translator omits ideological elements from the source text in the translation. These are elements that:
   - Appear in the source text but are deliberately omitted in the target text
   - Represent cultural, religious, political, or other ideologically sensitive content filtered out during translation
   - May include references, terminology, or concepts that are intentionally excluded from the target text
   - Result in the target text being ideologically sanitized compared to the source text
 
-Task: Identify only clear instances of Self-Censorship (SC) in the provided translation. Instead of inserting tags directly, list each omitted text segment separately in your response. Only include cases where the translator has deliberately omitted source text elements in the target text.
+Task: 
+Identify only clear instances of Self-Censorship in the provided translation. Instead of inserting tags directly, list each omitted text segment separately in your response. Only include cases where the translator has deliberately omitted source text elements in the target text. 
 
 Instructions:
   - Compare the source text and target_untagged text carefully.
@@ -17,10 +18,27 @@ Instructions:
     - The corresponding complete text segment from the target_untagged text where this omitted content would logically fit (but doesn't appear).
     - An explanation of why this source text element was likely censored in the translation.
 
-**CRITICAL MATCHING REQUIREMENT**:
+Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
 
+You must respond with ONLY a valid JSON object according to the format below, without any introduction, explanation, or conclusion text:
+{
+  "source_segments": [...],
+  "target_segments": [...],
+  "explanations": [...]
+}
+
+If no instances are found, you must only return:
+{
+  "source_segments": [],
+  "target_segments": [],
+  "explanations": []
+}
+
+Do not include any text outside the JSON object. Your entire response must be valid JSON and nothing else.
+
+**CRITICAL MATCHING REQUIREMENT**:
   - You MUST copy segments CHARACTER-BY-CHARACTER without any modifications
-  - When selecting a segment, perform a binary search to ensure the exact string exists in the text
+  - When selecting a segment, ensure the exact string exists in the text
   - Copy segments directly from the text provided to you WITHOUT ANY CHANGES:
     - DO NOT "correct" spacing (keep all extra spaces exactly as they appear)
     - DO NOT normalize punctuation in any way (keep exactly as is)
@@ -30,7 +48,7 @@ Instructions:
   - After extracting each segment, verify it by checking that an exact match can be found in the original text
   - If you cannot find an exact, character-by-character match for your segment, adjust your selection
   - Each explanation should identify what source content was omitted in the translation and why.
-  - If no SC instances are identified, return an empty array for both source_segments, target_segments, and explanations.
+  - If no instances are identified, return an empty array for both source_segments, target_segments, and explanations.
   - Do not include any special characters like \n in the explanations.
   - Output your response in valid JSON format with the following keys:
     - "source_segments" (array of source text portions that were omitted in translation)
@@ -38,7 +56,7 @@ Instructions:
     - "explanations" (array of explanations, each corresponding to a pair of source and target segments)
   - Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
 
-## Examples
+Examples:
 
 Example 1:
 
@@ -80,11 +98,4 @@ Output:
   "explanations": [
     "The translator omitted the phrase 'de Jupiter' (of Jupiter) which should have appeared after 'those Telescopes'. This censorship removes the specific attribution of the telescopes to Jupiter, making the text more ambiguous about which planet's telescopes are being discussed, possibly to simplify the translation or to avoid repetition since Jupiter is mentioned earlier in the paragraph."
   ]
-}
-
-Now process the following input data:
-
-{
-  "source": "{SOURCE_FR}",
-  "target_untagged": "{TARGET_EN_UNTAGGED}"
 }

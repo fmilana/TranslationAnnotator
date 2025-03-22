@@ -1,0 +1,78 @@
+## Added Text (UP) Task
+
+Added Text (UP) occurs when the translator includes propositions in the target text that are not present in the source text to normalize translations. These are elements that:
+  - Appear in the target text but do not exist in the source text
+  - Represent content added to provide clarity, context, or cultural relevance for the target audience
+  - May include explanations, elaborations, or contextual details absent in the source but added to the target
+  - Help normalize translations while maintaining coherence and naturalness in the target language
+  
+Task: Identify only clear instances of Added Text (UP) in the provided target text. Instead of inserting tags directly, list each added text segment separately in your response. Only include cases where the translator has deliberately added target text elements that don't exist in the source text.
+
+Instructions:
+  - Compare the source text and target_untagged text carefully.
+  - Do not identify differences that arise purely from natural linguistic differences between the source and target languages.
+  - Only identify segments if the translator has deliberately added content to the target text that was not present in the source text.
+  - For each identified instance, provide:
+    - The exact text segment from the target_untagged text that was added and doesn't exist in the source.
+    - The corresponding complete text segment from the source text where this added content would logically fit (but doesn't appear).
+    - An explanation of why this target text element was likely added in the translation.
+
+## Examples
+
+Example 1:
+
+Input:
+{
+    "source_": "<P042>Ces deux Airs diferens, repris-je, contribuent à empêcher la communication des deux Planetes. S'il ne tenoit qu'à voler; que savons-nous, comme je vous disois hier, si on ne volera pas fort bien quelque jour? J'avoüe pourtant qu'il n'y a pas beaucoup d'apparence. Le grand éloignement de la Lune à la Terre serait encore une difficulté à surmonter, qui est assurement considerable, mais quand même elle ne s'y rencontreroit pas, quand même les deux Planetes seroient proches, il ne seroit pas possible de passer de l'Air de l'une dans l'air de l'autre. L'eau est l'air des Poissons, ils ne passent jamais dans l'Air des Oiseaux dans l'air des Poissons; ce n'est pas la distance qui les en empêche, c'est que chacun a pour prison l'air qu'il respire. Nous trouvons que le nôtre est mêlé de vapeurs plus épaisses & plus grossières que celuy de la Lune. A ce compte, un Habitan de la Lune qui seroit arrivé aux confins de notre Monde, se noyeroit dés qu'il entreroit dans notre Air, & nous le verrions tomber mort sur la Terre.</P042>",
+    "target_untagged": "<P032>These different Airs, answer'd I, hinder the Communication and Commerce of these two Planets: If flying wou'd do the business, what do I know, but we might come to perfection in that Art I discours'd of last Night. I confess, Madam, there seems but little likelihood of what I say, since the great distance between the Moon and the Earth makes the difficulty so hard to overcome, which is very considerable; but tho' it were not, and that the Earth and the Moon were plac'd near one another, yet it wou'd not be possible to pass from the Air of the Earth, to the Air of the Moon. The Water is the Air and Element of Fish, who never pass into the Air and Element of Birds; 'tis not the distance that hinders 'em, but 'tis because every one of 'em are confin'd to the Air which they breath. We find that our Air is mix'd with Vapours, that are thicker and grosser than those of the Moon; and by consequence, any Inhabitants of the Moon, who shou'd arrive upon the Confines of our World, wou'd be drown'd and suffocated as soon as they enter'd into our Air, and we shou'd see 'em fall dead upon the Earth.</P032>"
+}
+
+Output:
+{
+  "source_segments": [
+    "L'eau est l'air des Poissons",
+    "ils ne passent jamais dans l'Air des Oiseaux",
+    "qui seroit arrivé aux confins de notre Monde, se noyeroit dés qu'il entreroit dans notre Air"
+  ],
+  "target_segments": [
+    "The Water is the Air and Element of Fish",
+    "they never pass into the Air and Element of Birds",
+    "who shou'd arrive upon the Confines of our World, wou'd be drown'd and suffocated as soon as they enter'd into our Air"
+  ],
+  "explanations": [
+    "The translator added 'and Element' to clarify the comparison between water for fish and air for birds, making the metaphor more explicit for English readers.",
+    "The translator added 'and Element' again for consistency with the previous addition, reinforcing the parallel between the environments of fish and birds.",
+    "The translator added 'and suffocated' to enhance the description of what would happen to Moon inhabitants in Earth's air, providing additional clarity about the fatal consequences of entering Earth's atmosphere."
+  ]
+}
+
+Example 2:
+
+Input:
+{
+  "source": "<P055>Les songes ne furent point heureux: ils representerent toûjours quelque chose qui ressembloit à ce que l'on voit iciy. J'eus lieu de reprocher à la Marquise ce que nous reprochent à la veüe de nos Tableaux, de certains Peuples qui ne font jamaïs que des peintures bizarres & grotesques. Bon, nous disent-ils, cela est tout fait comme des hommes, il n'y a pas là d'imagination. Il falut donc se resoudre à ignorer les figures des Habitans de toutes ces Planetes, & se contenter d'en deviner ce que nous pourrions, en continuant le Voyage des Mondes que nous avions commencé. Nous en êtions à Vénus. On est bien sûr, dis-je à la Marquise, que Venus tourne sur elle-même, mais on ne sait pas bien en quel temps, ny par consequent combien ses jours durent. Pour ses années elles ne sont que de huit mois, puis qu'elle tourne en ce temps-là autour du Soleil. Come elle est quarante fois plus petite que la Terre, la Terre de dedans Venus paroît une Planete quarante fois plus grande, que Venus ne nous paroît d'icy, & comme la Lune est aussi quarante fois petite que la Terre, elle paroît dedans Venus à peu prés de la même grandeur dont Venus nous paroît d'icy.</P055>",
+  "target_untagged": "<P041>THe Dreams of my Lady Marquiese were not lucky, they still represented to her something like what we see on Earth; so that I had as much reason to reproach her, as certain People have to blame us when they see some of our Pictures; for they being ignorant of drawing, and designing, and pleasing themselves with their extravagant and grotesque Figures, tell us, our Pictures are nothing but Men and Women, and that there is no Fancy in 'em; there was therefore a necessity of laying aside all sorts of the Forms and Figures of those Animals that inhabit several Planets, and to rest satisfy'd by guessing as well as we can, in pursuing our Journey, which we had begun, through the several Worlds of the Universe.</P041> <P042>We were at Venus: And there is no doubt, said I to my Lady Marquiese, but Venus turns upon her own Axis, but 'tis not known in what time, and by consequence, we know not the length of her Days, but her Years must consist but of eight Months, since Venus turns round the Sun in that space of time. As Venus is forty times less than the Earth, the Earth must necessarily appear to the Inhabitants of Venus, to be forty times bigger than Venus appears to us; and as the Moon is also forty times less than the Earth, by consequence, it must appear to the Inhabitants of Venus, about the same bigness that Venus appears to us.</P042>"
+}
+
+Output:
+{
+  "source_segments": [
+    "Les songes ne furent point heureux",
+    "puis qu'elle tourne en ce temps-là autour du Soleil"
+  ],
+  "target_segments": [
+    "THe Dreams of my Lady Marquiese were not lucky",
+    "since Venus turns round the Sun in that space of time"
+  ],
+  "explanations": [
+    "The translator added 'of my Lady Marquiese' to explicitly identify whose dreams are being discussed, providing clarity for the English reader where the source text relies more on context.",
+    "The translator added 'in that space of time' to emphasize the duration of Venus's orbit around the Sun, making the temporal relationship more explicit for English readers than it was in the French original."
+  ]
+}
+
+Now process the following input data:
+
+{
+  "source": "{SOURCE_FR}",
+  "target_untagged": "{TARGET_EN_UNTAGGED}"
+}

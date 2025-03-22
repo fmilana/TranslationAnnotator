@@ -1,0 +1,6 @@
+Process the following input data:
+
+{
+  "source": "{SOURCE_FR}",
+  "target_untagged": "{TARGET_EN_UNTAGGED}"
+}
