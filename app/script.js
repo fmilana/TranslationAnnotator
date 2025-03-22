@@ -1,59 +1,75 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Create a style element
-  const style = document.createElement('style');
-
   let darkMode = true;
-  const tag = "LS";
+  let tag = "IIM";
   
   let highlightedSource = null;
+
+  loadData();
 
   // Get the navbar and content wrapper elements
   const navbar = document.querySelector(".navbar");
   const contentWrapper = document.querySelector(".content-wrapper");
 
+  // Add event listeners to tag dropdown items
+  document.querySelectorAll('.tag-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      // Update the displayed tag in the dropdown
+      document.getElementById('selectedTag').textContent = this.textContent;
+      
+      // Store the selected tag in the variable
+      tag = this.textContent;
+
+      // load data for the selected tag
+      loadData();
+
+      // Prevent default anchor behavior
+      e.preventDefault();
+    });
+  });
+
 
   // dark mode toggle
   const toggle = document.getElementById("darkModeToggle");
-    const themeIcon = document.getElementById("themeIcon");
-    
-    // Set initial icon based on toggle state
-    updateIcon(toggle.checked);
-    
-    // Add event listener to toggle
-    toggle.addEventListener("change", function() {
-      darkMode = this.checked;
-      updateIcon(this.checked);
-    });
-    
-    function updateIcon(isDarkMode) {
-      if (isDarkMode) {
-        // Dark mode is on - show moon icon
-        themeIcon.className = "bi bi-moon-stars-fill";
+  const themeIcon = document.getElementById("themeIcon");
+  
+  // Set initial icon based on toggle state
+  updateIcon(toggle.checked);
+  
+  // Add event listener to toggle
+  toggle.addEventListener("change", function() {
+    darkMode = this.checked;
+    updateIcon(this.checked);
+  });
+  
+  function updateIcon(isDarkMode) {
+    if (isDarkMode) {
+      // Dark mode is on - show moon icon
+      themeIcon.className = "bi bi-moon-stars-fill";
 
-        // Set dark mode styles
-        document.body.classList.add("bg-dark");
-        document.getElementById("comparisonTable").classList.add("table-dark");
-        document.getElementById("aiCount").classList.add("dark-mode");
-        document.getElementById("manualCount").classList.add("dark-mode");
-        if (document.getElementById("explanationPopup")) {
-          document.getElementById("explanationPopup").className = "dark-mode";
-        }
-        console.log(3);
+      // Set dark mode styles
+      document.body.classList.add("bg-dark");
+      document.getElementById("comparisonTable").classList.add("table-dark");
+      document.getElementById("aiCount").classList.add("dark-mode");
+      document.getElementById("manualCount").classList.add("dark-mode");
+      if (document.getElementById("explanationPopup")) {
+        document.getElementById("explanationPopup").className = "dark-mode";
+      }
+      console.log(3);
 
-      } else {
-        // Dark mode is off - show sun icon
-        themeIcon.className = "bi bi-sun-fill";
+    } else {
+      // Dark mode is off - show sun icon
+      themeIcon.className = "bi bi-sun-fill";
 
-        // Remove dark mode styles
-        document.body.classList.remove("bg-dark");
-        document.getElementById("comparisonTable").classList.remove("table-dark");
-        document.getElementById("aiCount").classList.remove("dark-mode");
-        document.getElementById("manualCount").classList.remove("dark-mode");
-        if (document.getElementById("explanationPopup")) {
-          document.getElementById("explanationPopup").classList.remove("dark-mode");
-        }
+      // Remove dark mode styles
+      document.body.classList.remove("bg-dark");
+      document.getElementById("comparisonTable").classList.remove("table-dark");
+      document.getElementById("aiCount").classList.remove("dark-mode");
+      document.getElementById("manualCount").classList.remove("dark-mode");
+      if (document.getElementById("explanationPopup")) {
+        document.getElementById("explanationPopup").classList.remove("dark-mode");
       }
     }
+  }
 
 
   // Listen for scroll events on the content wrapper instead of window
@@ -72,157 +88,168 @@ document.addEventListener("DOMContentLoaded", function () {
     navbar.classList.add("navbar-shadow");
   }
 
-  fetch(`../data/results/behn_${tag}.json`)
-      .then(response => response.json())
-      .then(data => {
-          const tableBody = document.getElementById("comparisonTableBody");
-          let manualCount = 0;
-          let aiCount = 0;
-          
-          data.chunks.forEach(chunk => {
-              const row = document.createElement("tr");
+  function loadData() {
+    const tableBody = document.getElementById("comparisonTableBody");
+    // Show loading indicator
+    // tableBody.innerHTML = "<tr><td colspan='3' class='text-center'>Loading data...</td></tr>";
 
-              // Create table cells
-              const sourceCell = document.createElement("td");
-              sourceCell.innerHTML = formatText(chunk.source_manual);
+    fetch(`../data/results/behn_${tag}.json`)
+        .then(response => response.json())
+        .then(data => {
+            tableBody.innerHTML = ""; // Clear previous content
 
-              const manualCell = document.createElement("td");
-              manualCell.innerHTML = formatText(chunk.target_manual, tag);
+            let manualCount = 0;
+            let aiCount = 0;
+            
+            data.chunks.forEach(chunk => {
+                const row = document.createElement("tr");
 
-              manualCount += (manualCell.querySelectorAll(".highlight-text").length || 0);
+                // Create table cells
+                const sourceCell = document.createElement("td");
+                sourceCell.innerHTML = formatText(chunk.source_manual);
 
-              // If we have source segments
-              if (chunk.source_segments && chunk.source_segments.length > 0) {
-                // Process each segment and create the highlighted version
-                chunk.source_segments.forEach((segment, index) => {
-                  // Use the new findAndHighlight function for source cell
-                  findAndHighlight(sourceCell, segment, index, "semi-highlight-text", true);
-                });
-              }
+                const manualCell = document.createElement("td");
+                manualCell.innerHTML = formatText(chunk.target_manual, tag);
 
-              // For the AI column, we need to create text with highlights
-              const aiCell = document.createElement("td");
-              
-              // Start with the base text and apply formatting
-              aiCell.innerHTML = formatText(chunk.target_manual);
+                manualCount += (manualCell.querySelectorAll(".highlight-text").length || 0);
+
+                // If we have source segments
+                if (chunk.source_segments && chunk.source_segments.length > 0) {
+                  // Process each segment and create the highlighted version
+                  chunk.source_segments.forEach((segment, index) => {
+                    // Use the new findAndHighlight function for source cell
+                    findAndHighlight(sourceCell, segment, index, "semi-highlight-text", true);
+                  });
+                }
+
+                // For the AI column, we need to create text with highlights
+                const aiCell = document.createElement("td");
                 
-              // If we have target segments to highlight
-              if (chunk.target_segments && chunk.target_segments.length > 0) {
-                // Process each segment and create the highlighted version
-                chunk.target_segments.forEach((segment, index) => {
-                  // Use the new findAndHighlight function for AI cell
-                  findAndHighlight(aiCell, segment, index, "highlight-text", false);
-                });
-              }
-              
-              aiCount += (aiCell.querySelectorAll(".highlight-text").length || 0);
-
-              // Add click event listener to the highlight-text-container in the AI column
-              aiCell.addEventListener("click", function(event) {
-                // Check if the event target or any of its ancestors is a highlight-text-container
-                const container = event.target.closest(".highlight-text-container");
-
-                // Ensure the target is inside a highlight-text-container
-                if (container) {
-                  const highlightText = container.querySelector(".highlight-text");
-                  const index = parseInt(highlightText.getAttribute("data-index"));
-                  const explanation = chunk.explanations[index];
+                // Start with the base text and apply formatting
+                aiCell.innerHTML = formatText(chunk.target_manual);
                   
-                  // Show the explanation popup if available
-                  if (explanation) {
-                    showExplanationPopup(explanation);
-                  }
-
-                  // Keep the source text highlighted
-                  const sourceHighlight = sourceCell.querySelector(`.highlight-text[data-index="${index}"]`);
-                  if (sourceHighlight) {
-                    sourceHighlight.classList.add("highlight-text");  // Ensure it's highlighted
-                    sourceHighlight.classList.remove("semi-highlight-text");  // Remove the semi highlight
-                  }
-
-                  highlightedSource = sourceHighlight;  // Store the highlighted source
+                // If we have target segments to highlight
+                if (chunk.target_segments && chunk.target_segments.length > 0) {
+                  // Process each segment and create the highlighted version
+                  chunk.target_segments.forEach((segment, index) => {
+                    // Use the new findAndHighlight function for AI cell
+                    findAndHighlight(aiCell, segment, index, "highlight-text", false);
+                  });
                 }
-              });
+                
+                aiCount += (aiCell.querySelectorAll(".highlight-text").length || 0);
 
-              // Add on hover event listener to the highlight-text-container in the ai column
-              aiCell.addEventListener("mouseover", function(event) {
-                // Check if the event target or any of its ancestors is a highlight-text-container
-                const container = event.target.closest(".highlight-text-container");
+                // Add click event listener to the highlight-text-container in the AI column
+                aiCell.addEventListener("click", function(event) {
+                  // Check if the event target or any of its ancestors is a highlight-text-container
+                  const container = event.target.closest(".highlight-text-container");
 
-                // Ensure the target is inside a highlight-text-container
-                if (container) {
-                  const highlightText = container.querySelector(".highlight-text");
-                  const index = parseInt(highlightText.getAttribute("data-index"));
-                  const explanation = chunk.explanations[index];
+                  // Ensure the target is inside a highlight-text-container
+                  if (container) {
+                    const highlightText = container.querySelector(".highlight-text");
+                    const index = parseInt(highlightText.getAttribute("data-index"));
+                    const explanation = chunk.explanations[index];
+                    
+                    // Show the explanation popup if available
+                    if (explanation) {
+                      showExplanationPopup(explanation);
+                    }
 
-                  // Show the explanation in a tooltip
-                  if (explanation) {
-                    highlightText.setAttribute("title", explanation);
+                    // Keep the source text highlighted
+                    const sourceHighlight = sourceCell.querySelector(`.highlight-text[data-index="${index}"]`);
+                    if (sourceHighlight) {
+                      sourceHighlight.classList.add("highlight-text");  // Ensure it's highlighted
+                      sourceHighlight.classList.remove("semi-highlight-text");  // Remove the semi highlight
+                    }
+
+                    highlightedSource = sourceHighlight;  // Store the highlighted source
                   }
+                });
 
-                  // Highlight the corresponding source segment
-                  const sourceHighlight = sourceCell.querySelector(`.semi-highlight-text[data-index="${index}"]`);
-                  if (sourceHighlight) {
-                    sourceHighlight.classList.remove("semi-highlight-text");
-                    sourceHighlight.classList.add("highlight-text");
+                // Add on hover event listener to the highlight-text-container in the ai column
+                aiCell.addEventListener("mouseover", function(event) {
+                  // Check if the event target or any of its ancestors is a highlight-text-container
+                  const container = event.target.closest(".highlight-text-container");
+
+                  // Ensure the target is inside a highlight-text-container
+                  if (container) {
+                    const highlightText = container.querySelector(".highlight-text");
+                    const index = parseInt(highlightText.getAttribute("data-index"));
+                    const explanation = chunk.explanations[index];
+
+                    // Show the explanation in a tooltip
+                    if (explanation) {
+                      highlightText.setAttribute("title", explanation);
+                    }
+
+                    // Highlight the corresponding source segment
+                    const sourceHighlight = sourceCell.querySelector(`.semi-highlight-text[data-index="${index}"]`);
+                    if (sourceHighlight) {
+                      sourceHighlight.classList.remove("semi-highlight-text");
+                      sourceHighlight.classList.add("highlight-text");
+                    }
                   }
-                }
-              });
+                });
 
-              // Use mouseleave on the highlight-text-container
-              aiCell.addEventListener("mouseout", function(event) {
-                // Check if the event target or any of its ancestors is a highlight-text-container
-                const container = event.target.closest(".highlight-text-container");
+                // Use mouseleave on the highlight-text-container
+                aiCell.addEventListener("mouseout", function(event) {
+                  // Check if the event target or any of its ancestors is a highlight-text-container
+                  const container = event.target.closest(".highlight-text-container");
 
-                // Ensure the target is inside a highlight-text-container
-                if (container) {  // Ignore the mouseout if a click occurred
-                  const highlightText = container.querySelector(".highlight-text");
-                  const index = parseInt(highlightText.getAttribute("data-index"));
+                  // Ensure the target is inside a highlight-text-container
+                  if (container) {  // Ignore the mouseout if a click occurred
+                    const highlightText = container.querySelector(".highlight-text");
+                    const index = parseInt(highlightText.getAttribute("data-index"));
 
-                  // Reset the source text highlighting if it was highlighted and not clicked
-                  const sourceHighlight = sourceCell.querySelector(`.highlight-text[data-index="${index}"]`);
-                  if (sourceHighlight && sourceHighlight !== highlightedSource) {
-                    sourceHighlight.classList.remove("highlight-text");
-                    sourceHighlight.classList.add("semi-highlight-text");
+                    // Reset the source text highlighting if it was highlighted and not clicked
+                    const sourceHighlight = sourceCell.querySelector(`.highlight-text[data-index="${index}"]`);
+                    if (sourceHighlight && sourceHighlight !== highlightedSource) {
+                      sourceHighlight.classList.remove("highlight-text");
+                      sourceHighlight.classList.add("semi-highlight-text");
+                    }
                   }
-                }
-              });
+                });
 
-              // Append cells to row
-              row.appendChild(sourceCell);
-              row.appendChild(manualCell);
-              row.appendChild(aiCell);
-              
-              tableBody.appendChild(row);
-          });
+                // Append cells to row
+                row.appendChild(sourceCell);
+                row.appendChild(manualCell);
+                row.appendChild(aiCell);
+                
+                tableBody.appendChild(row);
+            });
 
-          document.getElementById("manualCount").textContent = `(${manualCount} occurrences)`;
-          document.getElementById("aiCount").textContent = `(${aiCount} occurrences)`;
+            document.getElementById("manualCount").textContent = `(${manualCount} occurrences)`;
+            document.getElementById("aiCount").textContent = `(${aiCount} occurrences)`;
       })
       .catch(error => console.error("Error loading data:", error));
+  }
 
-    function findAndHighlight(cell, segment, index, className) {
-      const cleanedSegment = segment
-        .replace(/<[^>]*>/g, "") // Remove any XML tags
-        .replace(/\s{2,}/g, " ") // Remove extra spaces
-        .replace(/(\s+)([.,;!?])/g, "$2") // Remove spaces before punctuation
-        .slice(0, -1) // Get segment without last character (for handling punctuation differences)
-        .replace(/&/g, "&amp;") // Escape special character for HTML entity handling
-        .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape all regex special characters
-      
-      // Using a regex with optional last character to handle potential punctuation differences
-      // 'i' flag for case-insensitive matching
-      const regex = new RegExp(`(${cleanedSegment}.)`, "gi");
-      
-      // Replace matches with highlighted spans
-      cell.innerHTML = cell.innerHTML.replace(regex, `<span class="highlight-text-container"><span class="${className}" data-index="${index}">$1</span></span>`);
-    }
+  function findAndHighlight(cell, segment, index, className) {
+    const cleanedSegment = segment
+      .replace(/<[^>]*>/g, "") // Remove any XML tags
+      .replace(/\s{2,}/g, " ") // Remove extra spaces
+      .replace(/(\s+)([.,;!?])/g, "$2") // Remove spaces before punctuation
+      .slice(0, -1) // Get segment without last character (for handling punctuation differences)
+      .replace(/&/g, "&amp;") // Escape special character for HTML entity handling
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape all regex special characters
+    
+    // Using a regex with optional last character to handle potential punctuation differences
+    // 'i' flag for case-insensitive matching
+    const regex = new RegExp(`(${cleanedSegment}.)`, "gi");
+    
+    // Replace matches with highlighted spans
+    cell.innerHTML = cell.innerHTML.replace(regex, `<span class="highlight-text-container"><span class="${className} ${tag}" data-index="${index}">$1</span></span>`);
+  }
+  
 
   function formatText(text, tag) {
     // Store the original text
     let result = text;
+
+    // Unescape quotation marks \\"
+    result = result.replace(/\\"/g, '"');
     
-    // First, replace paragraph tags with HTML paragraph tags
+    // Replace paragraph tags with HTML paragraph tags
     result = result.replace(/<(P\d+)>(.*?)<\/\1>/gs, function(match, p1, p2) {
       return `<p><span>${p1}</span>: ${p2}</p>`;
     });
@@ -231,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (tag) {
       const tagRegex = new RegExp(`<(${tag})>(.*?)<\\/\\1>`, "gs");
       result = result.replace(tagRegex, function(match, p1, p2) {
-        return `<span class="highlight-text-container"><span class="highlight-text">${p2}</span></span>`;
+        return `<span class="highlight-text-container"><span class="highlight-text ${tag}">${p2}</span></span>`;
       });
     }
     

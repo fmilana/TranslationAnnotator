@@ -1,0 +1,98 @@
+## Implicit or Indirect Manipulation (IIM) Task
+
+Implicit or Indirect Manipulation (IIM) occurs when there are mismatches or errors in the translation that may:
+  - Subtly alter the meaning of the original text
+  - Change the tone or connotation of statements
+  - Add or omit information that shifts perception
+  - These errors can be deliberate or unintentional, but result in manipulating the reader's understanding.
+
+Task: Identify only clear instances of implicit or indirect manipulation (IIM) in the provided English translation. Instead of inserting tags directly, list each manipulated text segment separately in your response. Only include cases where the translation contains mismatches or errors that change the meaning (e.g., shifting emphasis, altering facts, changing tone, or introducing bias not present in the original).
+
+Instructions:
+  - Compare the source (French) and target_untagged (English) texts carefully.
+  - Do not identify differences that arise purely from natural linguistic differences between English and French.
+  - Only identify segments if the translation contains errors or mismatches that alter the original meaning.
+  - For each identified instance, provide:
+    - The exact text segment from the source (French).
+    - The corresponding text segment from the target_untagged (English).
+    - An explanation of how the translation manipulates the original meaning.
+
+  - **CRITICAL MATCHING REQUIREMENT**:
+    - You MUST copy segments CHARACTER-BY-CHARACTER without any modifications
+    - When selecting a segment, perform a binary search to ensure the exact string exists in the text
+    - Copy segments directly from the text provided to you WITHOUT ANY CHANGES:
+      - DO NOT "correct" spacing (keep all extra spaces exactly as they appear)
+      - DO NOT normalize punctuation in any way (keep exactly as is)
+      - DO NOT remove trailing commas, periods, or other punctuation
+      - DO NOT add or remove even a single character
+      - DO NOT "clean up" the text in any way
+    - After extracting each segment, verify it by checking that an exact match can be found in the original text
+    - If you cannot find an exact, character-by-character match for your segment, adjust your selection
+    - Each explanation should identify exactly how the meaning was altered in the translation.
+    - If no manipulation instances are identified, return an empty array for both source_segments, target_segments, and explanations.
+    - Do not include any special characters like \n in the explanations.
+    - Output your response in valid JSON format with the following keys:
+      - "source_segments" (array of French text portions that were manipulated)
+      - "target_segments" (array of corresponding English text portions)
+      - "explanations" (array of explanations, each corresponding to a pair of source and target segments)
+    - Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
+
+## Examples:
+
+Example 1:
+
+Input:
+{
+    "source": "<P056>Vous m'affligez, dit la Marquise. Je voy bien que la Terre n'est pas pour Vénus l'Etoile du Berger, & la Mere des Amours, comme Vénus l'est pour la Terre; car la Terre de dedans Vénus paroît trop grande, mais la Lune qui y paroît de la même grandeur dont Vénus nous paroît d'icy, est justement taillée comme il faut pour y être Mere des Amours, & Etoile du Berger. Ces noms ne peuvent convenir qu'à une Planete qui soit jolie, claire, brillante, & qui ait un air galant. C'est asseurément une destinée agréable pour notre Lune que de presider aux Amours des Habitans de Vénus; ces Gens là doivent nien entendre la galanterie. Oh! sans doute, répondis-je, le menu Peuple de Vénus n'est composé que de Celadons & de Silvandres, & leurs Conversations le plus communes valent les plus belles de Clesie. Le climat est très favorable aux Amours. Vénus est plus proche que nous du Soleil, & elle en reçoit une lumiere plus vive & plus de chaleur.</P056> <P057>Je vois presentement, interrompit la Marquise, comment sont faits les Habitans de Vénus. Ils ressemblent aux Mores Grenadins; un petit Peuple noir, brûlé du Soleil, plein d'esprit & de feu, toûjours amoureux, faisant des Vers, aimant la Musique, inventant tous les jours des Fêtes, des Danses, & des Tournois. Permettez-moy de vous dire, Madame, répliquai-je, que vous ne connaissez guère bien les Habitans de Vénus. Nos Mores Grenadins n'auroient été auprés d'eux que des Lappons & des Groënlandois pour la froideur & pour la stupidité.</P057>",
+    "target_untagged": "<P043>You afflict me, said the Marquiese, extremely; I see very well, that our Earth is not that happy Planet to the Inhabitants of Venus, as she is to us; for our Globe of the Earth must appear too big to the Inhabitants of Venus, to be the Fountainof Love, but the Moon, which appears to the World of Venus, of the same size that Venus appears to us, is exactly cut out to be the Source of their Amours, and the lucky Star of their Intrigues; which Titles are most agreeable to the pretty, clear, twinkling Planets, which have in 'em a certain Air of Gallantry. 'Tis certainly a happy Fate for our Moon to give Laws to the Loves of the Inhabitants of Venus: No doubt, but these People are very soft, and have the Art to please extreamly well. Without dispute, Madam, said I; the very Mobile of Venus are all made up of Celladons and Silvanders, and their most ordinary Conversations excel the finest in Clelia; the Climate being more savourable to Love: Venus being nearer the Sun than we, receives from its Influence a brighter Light, and a more enlivening Heat. I perceive very well, interrupted the Marquiese, what kind of People the Inhabitants of Venus are; they are, like our Moors of Granada, a sort of little Sun-burnt Gentlemen, always in Love, full of Life and Fire, given to making Verses, and great Lovers of Musick, and every Day inventing Feasts, Balls and Masquerades, to entertain their Mistresses. Pray, Madam, said I, you are very ill acquainted with the Inhabitants of Venus; for our Moors of Granada are, in respect to them, as the Inhabitants of Lapland, or Greenland, for Coldness and Stupidity.</P043>"
+}
+
+Output:
+{
+  "source_segments": [
+    "Vénus l'est pour la Terre",
+    "Mere des Amours, & Etoile du Berger"
+  ],
+  "target_segments": [
+    "that happy Planet to the Inhabitants of Venus",
+    "the Fountain of Love"
+  ],
+  "explanations": [
+    "The direct comparison in French 'Vénus l'est pour la Terre' has been changed to 'that happy Planet to the Inhabitants of Venus', which adds the subjective quality 'happy' and shifts focus to inhabitants rather than the planet relationship.",
+    "The French 'Mere des Amours, & Etoile du Berger' (Mother of Loves and Shepherd's Star) has been translated to the simplified and altered 'Fountain of Love', which changes the metaphor and removes the dual nature of the original description."
+  ]
+}
+
+Example 2:
+
+Input:
+{
+    "source": "<P058>Mais que sera-ce des Habitants de Mercure? Ils sont encore plus proches du Soleil; il faut qu'ils soient fous à force de vivacité. Je croy qu'ils n'ont point de mémoire, non plus que la plupart des Négres; qu'ils ne font jamais de reflexion sur rien, qu'ils n'agissent qu'à l'aventure, & par des mouvements subits, & qu'enfin c'est dans Mercure que sont les Petites Maisons de l'Univers. Ils voyent le Soleil beaucoup plus grand que nous ne le voyons, parce qu'ils en sont beaucoup plus proches. Il leur envoie une lumière si forte, que s'ils étoient icy, ils ne prendroient nos plus beaux jours que pour de très foibles Crepuscules, & peut-être n'y pourroient-ils pas distinguer les objets, & la chaleur à laquelle ils sont accoûtumez est si excessive, que celle qu'il fait icy au fond de l'Afrique, suffiroit pour les glacier. Leur année n'est que de trois mois. La durée de leur jour ne nous est point encore connuë, parce que Mercure est si petit & si proche du Soleil, dans les rayons duquel il est presque toûjours perdu, qu'il échappe à toute l'adresse des Astronomes, & qu'on n'a pû encore avoir assez de prise sur lui, pour observer le mouvement qu'il doit avoir sur son centre; mais sa petitesse fait croire qu'il acheve ce tour en peu de temps; que par consequent le jour de Mercure est fort court, & que les Habitans voyent le Soleil comme un grand poële ardent, peu éloigné de leurs tête, & qui va d'une rapidité profigeuse. Cela en est mieux pour eux, car apparemment ils soûpirent après la nuit. Ils sont éclairez pendant ce temps-là de Vénus,& de la Terre, qui leur doivent paroître assez grandes. Pour les autres Planètes, comme elles sont au-delà de la Terre vers le Firmament, ils les voyent plus petites que nous ne les voyons, & n'en reçoivent que bien peu de lumière, peut-être n'en reçoivent-ils point du tout. Les Etoles Fixes sont aussi plus petites pour eux, & même il doit y en avoir beaucoup qui disparoissent entierement; c'est, selon moy, une perte. Je suis bien faché de voir cette grande voûte ornée de mois d'Etoiles, & de ne voir celles qui me resteroient, que plus petites, & d'une couleur plus effacée.</P058>",
+    "target_untagged": "<P044>But what then must the Inhabitants of Mercury be, for they are yet more near to the Sun? They must certainly be mad, by having too much Light and Fire; and I believe they have no more Memory, than the most part of our Negroes; they never think, and are void of all Reflection, and they only act by Chance, and by sudden Impulses. In short, the Planet Mercury must certainly be the Bethlem of the Universe; they see the Sun a great deal bigger than we do, because they are so much nearer to it; he darts upon 'em so strong a Light, that if the Inhabitants of Venus were here, they wou'd take our finest Days for the Remains of a saint Twilight; and it may be, the Light we enjoy, wou'd not serve them to distinguish one Object from another; and the Heat they are accustom'd to is so excessive, that the greatest warmth enjoy'd by the Inhabitants of the middle of Africk, wou'd frieze them to death. Their Year casts but three Months; the length of their Day is yet unknown, Mercury being so little a Planet, and so near the Sun, in whose Rays he is so continually lost, that he is hitherto scarce discoverable by the Art and Skill of Astronomers, who cou'd never yet get so much hold of Mercury, as to observe the Time in which he performs his Revolution upon his own Axis or Centre; but the smallness of his Planet perswades me 'tis in a very short time, and then, by consequence, his Days are very short, and his Inhabitants must see the Sun as a very great flaming Brasier, very near their Heads, which, to their Apprehension, moves with wonderful Rapidity; this makes them so earnestly wish for the coming Night, which, no doubt, must be much more grateful to 'em than the Day; and during those cooler Hours, they are enlightned by Venus, and by the Earth; which two Planets must appear to them of considerable bigness. As for the other Planets, since they are remov'd further than Mercury, towards the Firmament, his Inhabitants must see them less than they appear to us, and receive but little Light from 'em, it may be, none at all; the fixed Stars must appear less to 'em also, and they lose the sight of some of 'em entirely, which, in my Opinion, is a very great Loss; for I shou'd be very sorry to see the vast arch'd Roof of the Heavens adorn'd with fewer Stars, or those I do see, appear less, and not so bright.</P044>"
+}
+
+Output:
+{
+  "source_segments": [
+    "qu'enfin c'est dans Mercure que sont les Petites Maisons de l'Univers.",
+    "foibles",
+    "Terre vers le Firmament"
+  ],
+  "target_segments": [
+    "must certainly be the Bethlem",
+    "saint",
+    "Mercury"
+  ],
+  "explanations": [
+    "The French 'Petites Maisons' (literally 'small houses') was a euphemism for insane asylums, but the translation changes this to 'Bethlem' (referencing the specific Bethlem Royal Hospital in London), which introduces a culturally specific reference not present in the original text.",
+    "The French word 'foibles' (weak) has been mistranslated as 'saint', completely changing the meaning from describing twilight as weak to describing it as saintly or holy.",
+    "In the original French, it refers to 'la Terre vers le Firmament' (the Earth towards the Firmament), but the translation incorrectly substitutes 'Mercury' for 'Earth', which changes the astronomical relationship being described."
+  ]
+}
+
+Now process the following input data:
+
+{
+  "source": "{SOURCE_FR}",
+  "target_untagged": "{TARGET_EN_UNTAGGED}"
+}

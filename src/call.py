@@ -40,8 +40,8 @@ with open('prompts/system_prompt.txt', 'r') as file:
 
 # Define tags
 tags = {
-    # 'SC': 'Omitted Text',
-    'LS': 'Simplification',
+    'SC': 'Omitted Text',
+    # 'LS': 'Simplification',
     # 'RW': 'Explicitation',
     # 'UP': 'Added Text',
     # 'NCE': 'Domestication',
@@ -60,7 +60,7 @@ for tag in tags:
     system_prompt = system_prompt_template.replace('{TAG}', tag).replace('{TAG_NAME}', tags[tag])
 
     # Read the user prompt template
-    with open(f'prompts/{tag}/user_prompt.txt') as file:
+    with open(f'prompts/user_prompt_{tag}.txt') as file:
         user_prompt_template = file.read()
 
     for translator in translators:
@@ -104,15 +104,24 @@ for tag in tags:
             response_content = response_content[7:-3] # remove the first 7 and last 3 characters
 
             try:
-                # Try parsing the response content as JSON
+                # Attempt to parse the response as JSON
                 response_json = json.loads(response_content)
                 source_segments = response_json.get('source_segments', '')
                 target_segments = response_json.get('target_segments', '')
                 explanations = response_json.get('explanations', '')
             except json.JSONDecodeError:
-                # If not a valid JSON, print the raw response content
-                print(f'Error parsing JSON for chunk {chunk["chunk_id"]}: {response_content}')
-                source_segments = target_segments = explanations = ''  # Set as empty if JSON parsing fails
+                # If JSON parsing fails, try escaping quotations and parsing again
+                print(f'Error parsing JSON for chunk {chunk["chunk_id"]}: Attempting to escape and retry parsing.')
+                try:
+                    escaped_content = response_content.replace('"', '\\"')  # Escape double quotes
+                    response_json = json.loads(escaped_content)  # Attempt parsing again
+                    source_segments = response_json.get('source_segments', '')
+                    target_segments = response_json.get('target_segments', '')
+                    explanations = response_json.get('explanations', '')
+                except json.JSONDecodeError:
+                    print(f"Failed to parse JSON even after escaping for chunk {chunk['chunk_id']}.")
+                    print(f"Response content: {response_content}")
+                    source_segments = target_segments = explanations = ''  # Set empty if it still fails
 
             # Append the result for this chunk
             results.append({

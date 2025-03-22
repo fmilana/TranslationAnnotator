@@ -1,2 +1,5 @@
 .env
 src/__pycache__/
+data/results/test/
+app/node_modules/
+app/out/

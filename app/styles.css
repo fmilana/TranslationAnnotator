@@ -142,15 +142,59 @@
     padding-top: 5px;
     padding-bottom: 5px;
   }
-  
-  .highlight-text {
-    color: #212529;
-    /* background-color: #F9A825; */
-    background-color: #ffc800;
+
+  .highlight-text.IIM {
+    color: white;
+    background-color: #ff4e22;
+  }
+
+  .highlight-text.SC {
+    color: white;
+    background-color: #b15500;
   }
   
-  .semi-highlight-text {
+  .highlight-text.LS {
+    color: #212529;
+    background-color: #ffc800;
+  }
+
+  .highlight-text.RW {
+    color: white;
+    background-color: #1a9c00;
+  }
+
+  .highlight-text.UP {
+    color: white;
+    background-color: #962bfa;
+  }
+
+  .highlight-text.NCE {
+    color: white;
+    background-color: #007bff;
+  }
+
+  .semi-highlight-text.IIM {
+    background-color: rgba(255, 78, 34, 0.3);
+  }
+
+  .semi-highlight-text.SC {
+    background-color: rgba(177, 85, 0, 0.3);
+  }
+  
+  .semi-highlight-text.LS {
     background-color: rgba(255, 200, 0, 0.3);
+  }
+
+  .semi-highlight-text.RW {
+    background-color: rgba(26, 156, 0, 0.3);
+  }
+
+  .semi-highlight-text.UP {
+    background-color: rgba(150, 43, 250, 0.3);
+  }
+
+  .semi-highlight-text.NCE {
+    background-color: rgba(0, 123, 255, 0.3);
   }
   
   #comparisonTable tr td:nth-child(3) .highlight-text-container {
