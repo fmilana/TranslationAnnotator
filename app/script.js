@@ -1,3 +1,5 @@
+import { findSegmentInText } from "./match.js"
+
 document.addEventListener("DOMContentLoaded", function () {
   let darkMode = true;
   let tag = "IIM";
@@ -54,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (document.getElementById("explanationPopup")) {
         document.getElementById("explanationPopup").className = "dark-mode";
       }
-      console.log(3);
 
     } else {
       // Dark mode is off - show sun icon
@@ -224,21 +225,80 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error("Error loading data:", error));
   }
 
+  // function findAndHighlight(cell, segment, index, className) {
+  //   const cleanedSegment = segment
+  //     .replace(/<[^>]*>/g, "") // Remove any XML tags
+  //     .replace(/\s{2,}/g, " ") // Remove extra spaces
+  //     .replace(/(\s+)([.,;!?])/g, "$2") // Remove spaces before punctuation
+  //     .slice(0, -1) // Get segment without last character (for handling punctuation differences)
+  //     .replace(/&/g, "&amp;") // Escape special character for HTML entity handling
+  //     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape all regex special characters
+    
+  //   // Using a regex with optional last character to handle potential punctuation differences
+  //   // 'i' flag for case-insensitive matching
+  //   const regex = new RegExp(`(${cleanedSegment}.)`, "gi");
+    
+  //   // Replace matches with highlighted spans
+  //   cell.innerHTML = cell.innerHTML.replace(regex, `<span class="highlight-text-container"><span class="${className} ${tag}" data-index="${index}">$1</span></span>`);
+  // }
+  
   function findAndHighlight(cell, segment, index, className) {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = cell.innerHTML;
+    const plainText = tempDiv.textContent;
+    
+    // Clean segment by removing tags and normalizing whitespace
     const cleanedSegment = segment
-      .replace(/<[^>]*>/g, "") // Remove any XML tags
-      .replace(/\s{2,}/g, " ") // Remove extra spaces
-      .replace(/(\s+)([.,;!?])/g, "$2") // Remove spaces before punctuation
-      .slice(0, -1) // Get segment without last character (for handling punctuation differences)
-      .replace(/&/g, "&amp;") // Escape special character for HTML entity handling
-      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape all regex special characters
-    
-    // Using a regex with optional last character to handle potential punctuation differences
-    // 'i' flag for case-insensitive matching
-    const regex = new RegExp(`(${cleanedSegment}.)`, "gi");
-    
-    // Replace matches with highlighted spans
-    cell.innerHTML = cell.innerHTML.replace(regex, `<span class="highlight-text-container"><span class="${className} ${tag}" data-index="${index}">$1</span></span>`);
+      .replace(/<[^>]*>/g, "")  // Remove any XML tags
+      .replace(/\s{2,}/g, " ")  // Normalize whitespace
+      .trim();
+
+    // Use imported findSegmentInText to find the best match
+    const matchResult = findSegmentInText(cleanedSegment, plainText);
+
+    if (matchResult.matchType !== "notFound") {
+      // Match found, now insert highlight at the correct position
+      // Extract the matched segment and position
+      const matchedSegment = matchResult.segment;
+      let matchIndex = matchResult.index;
+
+      // Create a highlighted version of the segment
+      const highlightHtml = `<span class="highlight-text-container"><span class="${className} ${tag}" data-index="${index}">${matchedSegment}</span></span>`;
+
+      // Insert the highlight at the right position
+      let html = cell.innerHTML;
+
+      if (html.includes(matchedSegment)) {
+        html = html.replace(matchedSegment, highlightHtml);
+      } else {
+        // console.log(`Exact match failed for "${matchedSegment}". Using fuzzy match.`);
+
+        const escapedSegment = matchedSegment
+          .replace(/<[^>]*>/g, "") // Remove any XML tags
+          .replace(/\s{2,}/g, " ") // Normalize whitespace
+          .replace(/&/g, "&amp;") // Escape special character for HTML entity handling
+          .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape all regex special characters
+
+        const regex = new RegExp(escapedSegment, "i");
+        html = html.replace(regex, match => highlightHtml);
+      }
+
+      cell.innerHTML = html;
+
+      // Debugging info
+      // if (matchResult.matchType !== 'exact') {
+      //   console.log(`Match type: ${matchResult.matchType} for "${cleanedSegment}"`);
+      //   console.log(`Matched: "${matchedSegment}" at index ${matchIndex}`);
+      //   if (matchResult.similarity) {
+      //     console.log(`Similarity: ${matchResult.similarity}`);
+      //   }
+      // }
+
+      return true;
+    } else {
+      console.log(`No match found for "${cleanedSegment}".`);
+      return false;
+    }
   }
   
 
