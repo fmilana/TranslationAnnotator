@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Comparison Tool</title>
-    
-    <!-- Bootstrap CSS (Dark Mode) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Translation Annotator</title>
+      
+      <!-- Bootstrap CSS (Dark Mode) -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+      <!-- Bootstrap Icons -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+      
+      <!-- Custom Styles -->
+      <link rel="stylesheet" href="styles.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+      <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 
-    <!-- Bootstrap JS (for interactivity if needed) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Bootstrap JS (for interactivity if needed) -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom Script -->
-    <script type="module" src="script.js"></script>
-</head>
-<body class="bg-dark text-light">
+      <!-- Custom Script -->
+      <script src="renderer.js"></script>
+  </head>
+  <body class="bg-dark text-light">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-overlay">
+      <div class="spinner-container">
+        <div class="spinner-border text-light" role="status"></div>
+        <p class="loading-text mt-3">Loading...</p>
+      </div>
+    </div>
     <!-- Navbar -->
     <nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
@@ -54,12 +61,12 @@
                           <span id="selectedTag">IIM</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="tagDropdown">
-                          <li><a class="dropdown-item tag-item" href="#">IIM</a></li>
-                          <li><a class="dropdown-item tag-item" href="#">SC</a></li>
-                          <li><a class="dropdown-item tag-item" href="#">LS</a></li>
-                          <li><a class="dropdown-item tag-item" href="#">RW</a></li>
-                          <li><a class="dropdown-item tag-item" href="#">UP</a></li>
-                          <li><a class="dropdown-item tag-item" href="#">NCE</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">IIM - Implicit or Indirect Manipulation</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">SC - Self-Censorship</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">LS - Language Simplification</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">RW - Explicitation as Re-writing</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">UP - Added Text</a></li>
+                          <li><a class="dropdown-item tag-item" href="#">NCE - Domestication</a></li>
                         </ul>
                       </div>
                     </li>
@@ -80,7 +87,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
-            <div class="table-responsive">
+            <div id="tables-container" class="table-responsive">
                 <table id="comparisonTable" class="table table-dark table-bordered">
                     <thead>
                         <tr>
@@ -102,5 +109,5 @@
             </div>
         </div>
     </div>
-</body>
+  </body>
 </html>

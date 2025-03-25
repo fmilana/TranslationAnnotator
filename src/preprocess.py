@@ -109,22 +109,22 @@ def align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, t
 
 
 if __name__ == '__main__':
-    concordance_df = pd.read_csv('data/raw/concordance.csv')
+    concordance_df = pd.read_csv('app/data/raw/concordance.csv')
 
     # Extract paragraphs from the source XML
-    source_paragraphs = extract_paragraphs('data/raw/fontenelle_tagged.xml')
+    source_paragraphs = extract_paragraphs('app/data/raw/fontenelle_tagged.xml')
 
     translators = ['behn', 'domvill', 'glanville']
 
     for translator in translators:
-        translator_paragraphs = extract_paragraphs(f'data/raw/{translator}_tagged.xml')
+        translator_paragraphs = extract_paragraphs(f'app/data/raw/{translator}_tagged.xml')
 
         # Align paragraphs based on the concordance file
         aligned_chunks = align_paragraphs(source_paragraphs, translator_paragraphs, concordance_df, translator)
 
         # Save the output as JSON
         output_data = {'chunks': aligned_chunks}
-        with open(f'data/processed/{translator}_aligned.json', 'w', encoding='utf-8') as file:
+        with open(f'app/data/processed/{translator}_aligned.json', 'w', encoding='utf-8') as file:
             json.dump(output_data, file, ensure_ascii=False, indent=2)
 
-        print(f'✅ Created aligned data for {translator} with {len(aligned_chunks)} chunk pairs')
+        print(f'✅ Created aligned app/data for {translator} with {len(aligned_chunks)} chunk pairs')
