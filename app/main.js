@@ -8,6 +8,7 @@ let mainWindow;
 function createWindow() {
   // Create the browser window
   mainWindow = new BrowserWindow({
+    // icon: path.join(__dirname, "build", "icon.ico"),
     width: 1600,
     height: 900,
     resizable: true,
