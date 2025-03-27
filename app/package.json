@@ -64,6 +64,7 @@
     "define-properties": "^1.2.1",
     "delayed-stream": "^1.0.0",
     "detect-node": "^2.1.0",
+    "dialog-node": "^0.2.1",
     "dir-compare": "^3.3.0",
     "dmg-builder": "^24.13.3",
     "dotenv": "^9.0.2",

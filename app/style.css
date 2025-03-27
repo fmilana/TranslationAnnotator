@@ -100,6 +100,17 @@
     color: white;
   }
 
+  #saveButton {
+    height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0.8;
+    font-size: 0.875rem;
+  }
+
   .dropdown-toggle::after {
     color: white;
     border-top-color: white;
