@@ -1,0 +1,6 @@
+python-dotenv
+anthropic
+tenacity
+tqdm
+pandas
+chardet

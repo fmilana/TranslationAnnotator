@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
         tag = tagSelected;
   
         showLoading();
+
+        closeExplanationPopup();
   
         // load data for the selected tag
         // setTimeout(() => {
@@ -64,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
         // load data for the selected translator
         showLoading();
+
+        closeExplanationPopup();
   
         // setTimeout(() => {
           loadData();
@@ -282,12 +286,7 @@ function showExplanationPopup(explanation) {
         const closeButton = document.createElement("button");
         closeButton.className = "close-button";
         closeButton.onclick = function() {
-            popup.style.display = "none";
-            if (currentHighlightedSource) {
-                currentHighlightedSource.classList.remove("highlight-text");
-                currentHighlightedSource.classList.add("semi-highlight-text");
-                currentHighlightedSource = null;  // Clear the highlighted source
-            }
+            closeExplanationPopup();
         };
         popup.appendChild(closeButton);
         document.body.appendChild(popup);
@@ -320,6 +319,19 @@ function showExplanationPopup(explanation) {
     
     // Show popup
     popup.style.display = "block";
+}
+
+
+function closeExplanationPopup() {
+    const popup = document.getElementById("explanationPopup");
+    if (popup) {
+        popup.style.display = "none";
+        if (currentHighlightedSource) {
+            currentHighlightedSource.classList.remove("highlight-text");
+            currentHighlightedSource.classList.add("semi-highlight-text");
+            currentHighlightedSource = null;  // Clear the highlighted source
+        }
+    }
 }
 
 
