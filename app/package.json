@@ -290,15 +290,15 @@
     ],
     "mac": {
       "category": "public.app-category.utilities",
-      "icon": "512x512.icns"
+      "icon": "icon.icns"
     },
     "win": {
       "target": "portable",
-      "icon": "512x512.ico"
+      "icon": "icon.ico"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "512x512.png"
+      "icon": "icon.png"
     }
   }
 }
