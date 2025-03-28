@@ -217,6 +217,11 @@ function highlightSegments(chunkSegments, text, highlightType, tag) {
     result = result.slice(0, -7); // Remove the last empty <p></p>
   }
 
+  // Check if the text starts with an empty <p></p> and remove it if found
+  if (result.startsWith('<p></p>')) {
+    result = result.slice(7); // Remove the first empty <p></p>
+  }
+
   // Restore & to &amp;
   return result.replace(/&/g, "&amp;");
 }
