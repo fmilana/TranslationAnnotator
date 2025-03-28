@@ -261,7 +261,7 @@
   "homepage": "https://github.com/fmilana/TranslationAnnotator#readme",
   "build": {
     "appId": "com.translatorannotator.app",
-    "productName": "Translator Annotator",
+    "productName": "TranslationAnnotator",
     "directories": {
       "buildResources": "build",
       "output": "dist"
