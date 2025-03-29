@@ -4,3 +4,5 @@ data/results/test/
 app/node_modules/
 app/out/
 dist/
+app/.DS_Store
+.DS_Store
