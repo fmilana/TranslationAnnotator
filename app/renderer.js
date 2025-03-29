@@ -1,4 +1,4 @@
-const translators = ["behn", "domvill", "glanville"];
+const translators = ["behn", "knight", "glanvill"];
 const tags = ["IIM", "SC", "LS", "RW", "UP", "NCE"];
 
 // renderer.js - Main application code
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     document.querySelectorAll(".translator-item").forEach(item => {
       item.addEventListener("click", function(e) {
-        const translatorSelected = this.textContent.toLowerCase();
+        const translatorSelected = this.textContent.replace(/\s*\(\d+\)$/, '').toLowerCase();
   
         // Update the displayed translator in the dropdown
         document.getElementById("selectedTranslator").textContent = this.textContent;
@@ -173,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
               });
               
               // Update counts
-              document.getElementById("manualCount").textContent = `(${data.counts.manual} occurrences)`;
-              document.getElementById("aiCount").textContent = `(${data.counts.ai} occurrences)`;
+              document.getElementById("manualCount").textContent = `${data.counts.manual} occurrences`;
+              document.getElementById("aiCount").textContent = `${data.counts.ai} occurrences`;
               
               console.log("Data loaded successfully for tag:", tag);
             });

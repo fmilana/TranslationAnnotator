@@ -28,8 +28,8 @@ def completion_with_backoff(**kwargs):
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Process translations with specific translator and tag")
-    parser.add_argument("--translator", required=True, choices=["behn", "domvill", "glanville"], 
-                        help="Translator to process (behn, domvill, or glanville)")
+    parser.add_argument("--translator", required=True, choices=["behn", "knight", "glanvill"], 
+                        help="Translator to process (behn, knight, or glanville)")
     parser.add_argument("--tag", required=True, choices=["SC", "LS", "RW", "UP", "NCE", "IIM"], 
                         help="Tag to process (SC, LS, RW, UP, NCE, or IIM)")
     parser.add_argument("--test", action="store_true", help="Run in test mode with only 2 chunks")

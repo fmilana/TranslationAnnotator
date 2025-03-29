@@ -12,8 +12,8 @@ function createWindow() {
     width: 1600,
     height: 900,
     resizable: true,
-    minWidth: 800,
-    minHeight: 600,
+    minWidth: 1100,
+    minHeight: 700,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,

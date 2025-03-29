@@ -92,6 +92,10 @@
     color: white;
   }
 
+  #translator-dropdown {
+    width: 160px;
+  }
+
   #selectedTranslator {
     color: white;
   }

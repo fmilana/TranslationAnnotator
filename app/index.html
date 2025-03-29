@@ -41,14 +41,14 @@
                     <!-- Translator label and dropdown -->
                     <li class="nav-item d-flex align-items-center">
                       <span class="navbar-text">Translator:</span>
-                      <div class="dropdown">
+                      <div id="translator-dropdown" class="dropdown">
                         <a class="nav-link dropdown-toggle py-0" href="#" id="translatorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <span id="selectedTranslator">Behn</span>
+                          <span id="selectedTranslator">Behn (1668)</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="translatorDropdown">
-                          <li><a class="dropdown-item translator-item" href="#">Behn</a></li>
-                          <li><a class="dropdown-item translator-item" href="#">Domvill</a></li>
-                          <li><a class="dropdown-item translator-item" href="#">Glanville</a></li>
+                          <li><a class="dropdown-item translator-item" href="#">Behn (1668)</a></li>
+                          <li><a class="dropdown-item translator-item" href="#">Knight (1687)</a></li>
+                          <li><a class="dropdown-item translator-item" href="#">Glanvill (1688)</a></li>
                         </ul>
                       </div>
                     </li>
@@ -56,7 +56,7 @@
                     <!-- Tag label and dropdown -->
                     <li class="nav-item d-flex align-items-center ms-3">
                       <span class="navbar-text ms-2">Tag:</span>
-                      <div class="dropdown">
+                      <div id="tag-dropdown" class="dropdown">
                         <a class="nav-link dropdown-toggle py-0" href="#" id="tagDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <span id="selectedTag">IIM</span>
                         </a>
@@ -96,11 +96,11 @@
                             <th scope="col">Source Text</th>
                             <th scope="col">
                                 Manual Annotation on Target Text
-                                <div id="manualCount" class="count-badge dark-mode" id="manualCount">(No occurrences)</div>
+                                <div id="manualCount" class="count-badge dark-mode" id="manualCount">No occurrences</div>
                             </th>
                             <th scope="col">
                                 AI-Generated Annotation on Target Text
-                                <div id="aiCount" class="count-badge dark-mode" id="aiCount">(No occurrences)</div>
+                                <div id="aiCount" class="count-badge dark-mode" id="aiCount">No occurrences</div>
                             </th>
                         </tr>
                     </thead>

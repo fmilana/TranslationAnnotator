@@ -114,7 +114,7 @@ if __name__ == '__main__':
     # Extract paragraphs from the source XML
     source_paragraphs = extract_paragraphs('app/data/raw/fontenelle_tagged.xml')
 
-    translators = ['behn', 'domvill', 'glanville']
+    translators = ['behn', 'kngiht', 'glanvill']
 
     for translator in translators:
         translator_paragraphs = extract_paragraphs(f'app/data/raw/{translator}_tagged.xml')

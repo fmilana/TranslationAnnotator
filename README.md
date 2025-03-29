@@ -1,6 +1,6 @@
 # Translation Annotator
 
-An Electron application to display and compare manual and AI-generated annotations of English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle. 
+An Electron application to display and compare manual and AI-generated annotations of English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle, 1686. 
 
 ## Instructions
 
