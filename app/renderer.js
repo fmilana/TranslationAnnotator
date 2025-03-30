@@ -5,7 +5,7 @@ const tags = ["IIM", "SC", "LS", "RW", "UP", "NCE"];
 document.addEventListener("DOMContentLoaded", function () {
     showLoading();
   
-    let translator = "behn";
+    let translator = "knight";
     let tag = "IIM";
     
     // Get the navbar and content wrapper elements
