@@ -42,7 +42,7 @@ def main():
     global client
     client = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
     if not client.api_key:
-        raise ValueError('API key not found. Please check your .env file.')
+        raise ValueError('"ANTHROPIC_API_KEY" not found. Please check your .env file.')
 
     # Read the user prompt template
     with open(f'prompts/user_prompt.txt') as file:

@@ -4,6 +4,8 @@ const tags = ["IIM", "SC", "LS", "RW", "UP", "NCE"];
 // renderer.js - Main application code
 document.addEventListener("DOMContentLoaded", function () {
     showLoading();
+
+    // window.electron.updateSaveButton(translators, tags);
   
     let translator = "knight";
     let tag = "IIM";
@@ -183,14 +185,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error loading data:", error);
             tableBody.innerHTML = `<tr><td colspan="3" class="text-center">Error loading data: ${error.message}</td></tr>`;
         } finally {
-            if (document.getElementById("saveButton").disabled) {
-                updateSaveButtonPromise = window.electron.updateSaveButton(translators, tags);
-                updateSaveButtonPromise.then(() => {
-                    console.log("Save button updated");
-                }).catch(err => {
-                    console.error("Error updating save button:", err);
-                });
-            }
+            // if (document.getElementById("saveButton").disabled) {
+            //     window.electron.updateSaveButton(translators, tags);
+            // }
             hideLoading();
         }
     }

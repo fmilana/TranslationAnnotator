@@ -74,31 +74,31 @@ ipcMain.handle("read-data", async (event, translator, tag) => {
   return readData(translator, tag);
 });
 
-ipcMain.handle("update-save-button", async (event, translators, tags) => {
-  updateSaveButton(translators, tags);
-});
+// ipcMain.handle("update-save-button", async (event, translators, tags) => {
+//   updateSaveButton(translators, tags);
+// });
 
 
-function updateSaveButton(translators, tags) {
-  // Check if all files are present in the cache
-  const cacheDir = path.join(__dirname, "data", "cache");
-  let allFilesPresent = true;
-  for (const translator of translators) {
-      for (const tag of tags) {
-          const filePath = path.join(cacheDir, `${translator}_${tag}.json`);
-          if (!fs.existsSync(filePath)) {
-              allFilesPresent = false;
-              break;
-          }
-      }
-  }
+// function updateSaveButton(translators, tags) {
+//   // Check if all files are present in the cache
+//   const cacheDir = path.join(__dirname, "data", "cache");
+//   let allFilesPresent = true;
+//   for (const translator of translators) {
+//       for (const tag of tags) {
+//           const filePath = path.join(cacheDir, `${translator}_${tag}.json`);
+//           if (!fs.existsSync(filePath)) {
+//               allFilesPresent = false;
+//               break;
+//           }
+//       }
+//   }
 
-  if (allFilesPresent) {
-      document.getElementById("saveButton").disabled = false;
-  } else {
-      document.getElementById("saveButton").disabled = true;
-  }
-}
+//   if (allFilesPresent) {
+//       document.getElementById("saveButton").disabled = false;
+//   } else {
+//       document.getElementById("saveButton").disabled = true;
+//   }
+// }
 
 
 function readData(translator, tag) {
@@ -189,14 +189,14 @@ function formatText(text, tag) {
       .replace(/\s{2,}/g, " ") // Remove extra spaces
       .replace(/(\s+)([.,;!?])/g, "$2") // Remove spaces before punctuation
       .replace(/&/g, "&amp;") // Escape special characters for HTML entity handling
-      
+  
   return result;
 }
 
 
 function highlightSegments(chunkSegments, text, highlightType, tag) {
-  // Remove existing p tags and unescape XML entities if needed
-  text = text.replace(/<p>/g, '').replace(/<\/p>/g, '').replace(/&amp;/g, '&');
+  // unescape XML entities and p tags
+  text = text.replace(/&amp;/g, '&').replace(/<\/?p>/g, '');
 
   // Apply highlights
   chunkSegments.forEach((segment, index) => {
@@ -209,21 +209,25 @@ function highlightSegments(chunkSegments, text, highlightType, tag) {
     }
   });
 
-  // Add paragraph tags at P00X markers and wrap the entire text in a paragraph initially
-  let result = '<p>' + text.replace(/P\d{3}/g, match => `</p><p>${match}`);
-
-  // Check if the text ends with an empty <p></p> and remove it if found
-  if (result.endsWith('<p></p>')) {
-    result = result.slice(0, -7); // Remove the last empty <p></p>
-  }
-
-  // Check if the text starts with an empty <p></p> and remove it if found
-  if (result.startsWith('<p></p>')) {
-    result = result.slice(7); // Remove the first empty <p></p>
+  // Re-add paragraph tags at P00X markers
+  text = text.replace(/\b(P\d{3})/g, '<p>$1');
+  const sections = text.split('<p>');
+  text = sections[0];
+  for (let i = 1; i < sections.length; i++) {
+    const section = sections[i];
+    // Check if there's another P00x in this section
+    const nextPIndex = section.substring(4).search(/\bP\d{3}\b/);
+    if (nextPIndex !== -1) {
+      // Add </p> before the next P00x 
+      text += '<p>' + section.substring(0, nextPIndex + 4) + '</p>' + section.substring(nextPIndex + 4);
+    } else {
+      // Add </p> at the end of this section
+      text += '<p>' + section + '</p>';
+    }
   }
 
   // Restore & to &amp;
-  return result.replace(/&/g, "&amp;");
+  return text.replace(/&/g, "&amp;");
 }
 
 
@@ -232,9 +236,6 @@ function extractFiles(translator, tag) {
   const extractedDir = path.join(__dirname, "data", "cache", "extracted");
   const txtDir = path.join(extractedDir, "txt");
   fs.readdir(txtDir, (err, files) => {
-    if (!files.includes("fontenelle.txt")) {
-      extractSource();
-    } 
     let xml = "";
     
     if (!files.includes(`${translator}_${tag}.xml`) && !files.includes(`${translator}_${tag}.txt`)) {
@@ -261,6 +262,14 @@ function extractFiles(translator, tag) {
       const txtPath = path.join(__dirname, "data", "cache", "extracted", "txt", `${translator}_${tag}.txt`);
       fs.writeFileSync(txtPath, txtContent);
     }
+
+    if (!files.includes("fontenelle.txt")) {
+      try {
+        extractSource();
+      } catch (error) {
+        console.error("Error extracting source:", error);
+      }
+    } 
   });
 }
 
@@ -270,6 +279,7 @@ function htmlToXml(htmlString) {
   const paragraphRegex = /<p>(P\d+):\s*(.*?)\s*<\/p>/g;
   const tagRegex = /<span class=\"(?:semi-highlight-text|highlight-text) (\w+)\" data-index=\"\d+\">(.*?)<\/span>/g;
   
+
   let match;
   while ((match = paragraphRegex.exec(htmlString)) !== null) {
     const pTag = match[1]; // E.g., P001, P002, etc.
@@ -467,7 +477,7 @@ function calculateCounts(chunks, tag) {
 
 function extractSource() {
   // Load cached data
-  const cachePath = path.join(__dirname, "data", "cache", "behn_IIM.json");
+  const cachePath = path.join(__dirname, "data", "cache", "knight_IIM.json");
   const cacheData = JSON.parse(fs.readFileSync(cachePath, "utf8"));
   const chunks = cacheData.chunks;
   let xmlContent = '';  // Accumulate the content inside <root>
