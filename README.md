@@ -6,18 +6,40 @@ An Electron application to visualize and compare manual and AI-generated annotat
 
 ## Instructions
 
-To run the application:
+### To run the application:
 
-1. Navigate to /app and install nodejs and Electron
+1. Navigate to /app
 
-2. Run  ```npm start``` to run the app
+2. Install nodejs and Electron
 
-(install pip libraries from requirements.txt in the root folder to run python scripts)
+3. Run  ```npm start```
 
-To build executables:
+### To build executables:
 
-1. Navigate to /app and install electron-builder
+1. Navigate to /app 
+
+2. Install electron-builder
 
 2. Run ```npm run build:[win/mac/linux]```
 
 3. Navigate to app/dist for executables
+
+### Python Scripts
+
+Python scripts have already been run. If the data or prompts are modified, run: 
+
+- ```python src/preprocess.py``` to extract and align cleaned paragraphs from the source and translated texts.
+- ```python src/call.py --translator [translator] --tag [tag]``` to make API calls to Anthropic on all of the translator's text for the selected tag. Ensure that a .env file is created in the root folder with an ANTHROPIC_API_KEY.
+
+Translators:
+- knight
+- behn
+- glanvill
+
+Tags:
+- LS
+- NCE
+- RW
+- SC
+- UP
+- IIM

@@ -1,5 +1,13 @@
 const translators = ["behn", "knight", "glanvill"];
-const tags = ["IIM", "SC", "LS", "RW", "UP", "NCE"];
+
+const tags = {
+    "IIM": "Indirect Manipulation",
+    "LS": "Language Simplification",
+    "NCE": "Domestication",
+    "RW": "Explicitation",
+    "SC": "Self-Censorship",
+    "UP": "Added Text"
+}
 
 // renderer.js - Main application code
 document.addEventListener("DOMContentLoaded", function () {
@@ -107,12 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
     toggle.checked = false;
 
     // Set initial icon based on toggle state
-    updateIcon(toggle.checked);
+    updateTheme(toggle.checked);
     
     // Add event listener to toggle
     toggle.addEventListener("change", function() {
         darkMode = this.checked;
-        updateIcon(this.checked);
+        updateTheme(this.checked);
     });
 
     // Listen for scroll events on the content wrapper instead of window
@@ -175,8 +183,8 @@ document.addEventListener("DOMContentLoaded", function () {
               });
               
               // Update counts
-              document.getElementById("manualCount").textContent = `${data.counts.manual} occurrences`;
-              document.getElementById("aiCount").textContent = `${data.counts.ai} occurrences`;
+              document.getElementById("manualCount").textContent = `${data.counts.manual} occurrences of ${tags[tag]}`;
+              document.getElementById("aiCount").textContent = `${data.counts.ai} occurrences of ${tags[tag]}`;
               
               console.log("Data loaded successfully for tag:", tag);
             });
@@ -198,70 +206,143 @@ document.addEventListener("DOMContentLoaded", function () {
 // ui handler functions
 // Module-level state for tracking highlighted elements
 let currentHighlightedSource = null;
+let popupOpen = false;
 
 
 function setupCellEventListeners(aiCell, sourceCell, explanations) {
-    // Add click event listener to highlighted elements in AI cell
+    if (!aiCell || !sourceCell || !explanations) {
+        console.error("Missing required parameters for setupCellEventListeners");
+        return;
+    }
+    
+    // Source cell mouseover event
+    sourceCell.addEventListener("mouseover", function(event) {
+        const container = event.target.closest(".highlight-text-container");
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".semi-highlight-text");
+        if (highlightText) {
+            // Allow highlighting on hover even when popup is open, but
+            // don't change the current highlighted source when popup is open
+            highlightText.classList.remove("semi-highlight-text");
+            highlightText.classList.add("highlight-text");
+        }
+    });
+
+    // Source cell mouseout event
+    sourceCell.addEventListener("mouseout", function(event) {
+        const container = event.target.closest(".highlight-text-container");
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".highlight-text");
+        // Allow un-highlighting on mouseout even when popup is open,
+        // but don't change the current highlighted source
+        if (highlightText && highlightText !== currentHighlightedSource) {
+            highlightText.classList.remove("highlight-text");
+            highlightText.classList.add("semi-highlight-text");
+        }
+    });
+
+    // Source cell click event
+    sourceCell.addEventListener("click", function(event) {
+        const container = event.target.closest(".highlight-text-container");
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".highlight-text") || 
+                              container.querySelector(".semi-highlight-text");
+                              
+        if (!highlightText) return;
+        
+        const index = parseInt(highlightText.getAttribute("data-index"));
+        if (isNaN(index) || !explanations[index]) return;
+        
+        // If we already have a highlighted source that's different, unhighlight it first
+        if (currentHighlightedSource && currentHighlightedSource !== highlightText) {
+            currentHighlightedSource.classList.remove("highlight-text");
+            currentHighlightedSource.classList.add("semi-highlight-text");
+        }
+        
+        // Show explanation popup
+        showExplanationPopup(explanations[index]);
+        popupOpen = true; // Set popup state to open
+        
+        // Update current highlighted source
+        currentHighlightedSource = highlightText;
+        
+        // Ensure proper highlighting
+        highlightText.classList.remove("semi-highlight-text");
+        highlightText.classList.add("highlight-text");
+    });
+
+    // AI cell click event
     aiCell.addEventListener("click", function(event) {
         const container = event.target.closest(".highlight-text-container");
-        if (container) {
-            const highlightText = container.querySelector(".highlight-text");
-            const index = parseInt(highlightText.getAttribute("data-index"));
-            const explanation = explanations[index];
-            
-            // Show explanation popup
-            if (explanation) {
-                showExplanationPopup(explanation);
-            }
-            
-            // Highlight corresponding source text
-            const sourceHighlight = sourceCell.querySelector(`[data-index="${index}"]`);
-            if (sourceHighlight) {
-                sourceHighlight.classList.add("highlight-text");
-                sourceHighlight.classList.remove("semi-highlight-text");
-                currentHighlightedSource = sourceHighlight;
-                console.log("highlighted source:", currentHighlightedSource);
-            } else {
-                console.warn("Source highlight not found for index:", index);
-            }
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".highlight-text");
+        if (!highlightText) return;
+        
+        const index = parseInt(highlightText.getAttribute("data-index"));
+        if (isNaN(index) || !explanations[index]) return;
+        
+        // If we already have a highlighted source, unhighlight it first
+        if (currentHighlightedSource) {
+            currentHighlightedSource.classList.remove("highlight-text");
+            currentHighlightedSource.classList.add("semi-highlight-text");
+        }
+        
+        // Show explanation popup
+        showExplanationPopup(explanations[index]);
+        popupOpen = true; // Set popup state to open
+        
+        // Highlight corresponding source text
+        const sourceHighlight = sourceCell.querySelector(`[data-index="${index}"]`);
+        if (sourceHighlight) {
+            sourceHighlight.classList.remove("semi-highlight-text");
+            sourceHighlight.classList.add("highlight-text");
+            currentHighlightedSource = sourceHighlight;
         }
     });
     
-    // Add mouseover event listener
+    // AI cell mouseover event
     aiCell.addEventListener("mouseover", function(event) {
+        // Allow highlighting on hover even when popup is open
         const container = event.target.closest(".highlight-text-container");
-        if (container) {
-            const highlightText = container.querySelector(".highlight-text");
-            const index = parseInt(highlightText.getAttribute("data-index"));
-            const explanation = explanations[index];
-            
-            // Show tooltip
-            if (explanation) {
-                highlightText.setAttribute("title", explanation);
-            }
-            
-            // Highlight source
-            const sourceHighlight = sourceCell.querySelector(`.semi-highlight-text[data-index="${index}"]`);
-            if (sourceHighlight) {
-                sourceHighlight.classList.remove("semi-highlight-text");
-                sourceHighlight.classList.add("highlight-text");
-            }
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".highlight-text");
+        if (!highlightText) return;
+        
+        const index = parseInt(highlightText.getAttribute("data-index"));
+        if (isNaN(index) || !explanations[index]) return;
+        
+        // Show tooltip
+        highlightText.setAttribute("title", explanations[index]);
+        
+        // Highlight source
+        const sourceHighlight = sourceCell.querySelector(`[data-index="${index}"]`);
+        if (sourceHighlight && sourceHighlight !== currentHighlightedSource) {
+            sourceHighlight.classList.remove("semi-highlight-text");
+            sourceHighlight.classList.add("highlight-text");
         }
     });
     
-    // Add mouseout event listener
+    // AI cell mouseout event
     aiCell.addEventListener("mouseout", function(event) {
         const container = event.target.closest(".highlight-text-container");
-        if (container) {
-            const highlightText = container.querySelector(".highlight-text");
-            const index = parseInt(highlightText.getAttribute("data-index"));
-            
-            // Reset source highlighting
-            const sourceHighlight = sourceCell.querySelector(`.highlight-text[data-index="${index}"]`);
-            if (sourceHighlight && sourceHighlight !== currentHighlightedSource) {
-                sourceHighlight.classList.remove("highlight-text");
-                sourceHighlight.classList.add("semi-highlight-text");
-            }
+        if (!container) return;
+        
+        const highlightText = container.querySelector(".highlight-text");
+        if (!highlightText) return;
+        
+        const index = parseInt(highlightText.getAttribute("data-index"));
+        if (isNaN(index)) return;
+        
+        // Reset source highlighting
+        const sourceHighlight = sourceCell.querySelector(`[data-index="${index}"]`);
+        if (sourceHighlight && sourceHighlight !== currentHighlightedSource) {
+            sourceHighlight.classList.remove("highlight-text");
+            sourceHighlight.classList.add("semi-highlight-text");
         }
     });
 }
@@ -287,6 +368,7 @@ function showExplanationPopup(explanation) {
         };
         popup.appendChild(closeButton);
         document.body.appendChild(popup);
+        popupOpen = true;
     }
     
     // Get the width of the third column
@@ -327,12 +409,13 @@ function closeExplanationPopup() {
             currentHighlightedSource.classList.remove("highlight-text");
             currentHighlightedSource.classList.add("semi-highlight-text");
             currentHighlightedSource = null;  // Clear the highlighted source
+            popupOpen = false;
         }
     }
 }
 
 
-function updateIcon(isDarkMode) {
+function updateTheme(isDarkMode) {
     const themeIcon = document.getElementById("themeIcon");
     
     if (isDarkMode) {
@@ -342,6 +425,7 @@ function updateIcon(isDarkMode) {
         // Set dark mode styles
         document.body.classList.add("bg-dark");
         document.getElementById("comparisonTable").classList.add("table-dark");
+        document.getElementById("fontenelleLabel").classList.add("dark-mode");
         document.getElementById("aiCount").classList.add("dark-mode");
         document.getElementById("manualCount").classList.add("dark-mode");
         if (document.getElementById("explanationPopup")) {
@@ -354,6 +438,7 @@ function updateIcon(isDarkMode) {
         // Remove dark mode styles
         document.body.classList.remove("bg-dark");
         document.getElementById("comparisonTable").classList.remove("table-dark");
+        document.getElementById("fontenelleLabel").classList.remove("dark-mode");
         document.getElementById("aiCount").classList.remove("dark-mode");
         document.getElementById("manualCount").classList.remove("dark-mode");
         if (document.getElementById("explanationPopup")) {

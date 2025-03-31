@@ -28,7 +28,7 @@ function createWindow() {
   mainWindow.loadFile("index.html");
 
   // Open DevTools in development
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 }
 
 // When Electron has finished initialization

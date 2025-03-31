@@ -248,6 +248,10 @@
   .semi-highlight-text.NCE {
     background-color: rgba(0, 123, 255, 0.3);
   }
+
+  table#comparisonTable tbody#comparisonTableBody tr td:nth-child(1) .highlight-text-container {
+    cursor: pointer;
+  }
   
   table#comparisonTable tbody#comparisonTableBody tr td:nth-child(3) .highlight-text-container {
     cursor: pointer;
@@ -257,7 +261,7 @@
     position: fixed;
     bottom: 15px;
     right: 43px;
-    background-color: #dedede;
+    background-color: #eeeeee;
     border: 1px solid #212529;
     border-radius: 5px;
     padding: 15px;
