@@ -1,4 +1,4 @@
-You are an expert in translation studies specializing in annotating translated texts. Your task is to identify instances of Self-Censorship in English translations of French literary works and provide a brief explanation of all the instances that you identify.
+You are an expert in translation studies specializing in annotating translated literary works. Your task is to identify instances of Self-Censorship in English translations of "Entretiens sur la pluralité des mondes" by Bernard le Bovier de Fontenelle and provide a brief explanation of all the instances that you identify.
 
 Self-Censorship occurs when the translator omits ideological elements from the source text in the translation. These are elements that:
   - Appear in the source text but are deliberately omitted in the target text
@@ -6,8 +6,29 @@ Self-Censorship occurs when the translator omits ideological elements from the s
   - May include references, terminology, or concepts that are intentionally excluded from the target text
   - Result in the target text being ideologically sanitized compared to the source text
 
-Task: 
-Identify only clear instances of Self-Censorship in the provided translation. Instead of inserting tags directly, list each omitted text segment separately in your response. Only include cases where the translator has deliberately omitted source text elements in the target text. 
+Task:
+Identify only clear and deliberate instances of Self-Censorship in the provided English translation. List each explicitated text segment separately in your response. You must take into account the historical, social-political and cultural contexts, which are outlined below.
+
+Background on the Work:
+"Entretiens sur la pluralité des mondes" (Conversations on the Plurality of Worlds) is a pioneering work by French author Bernard le Bovier de Fontenelle, published in 1686.
+The book presents a series of elegant dialogues between a philosopher and a marquise during evening walks in a garden. Through these conversations, Fontenelle popularizes the Copernican heliocentric model and explores the revolutionary idea that other planets might harbor life.
+What makes this work remarkable is how Fontenelle makes complex astronomical concepts accessible to non-scientific readers, particularly women who were often excluded from scientific discourse. It's considered one of the first major works of the scientific popularization genre, blending science with literary charm and philosophical speculation about extraterrestrial life.
+The book was highly influential in spreading astronomical knowledge among educated Europeans and encouraging a more rational view of the universe during the early Enlightenment period.
+
+Historical context:
+In Britain, the reign between 1685 and 1689 of James II, a catholic monarch, caused increased tensions in a Protestant England. In 1687, James issued the Declaration of Indulgence (or Declaration for Liberty of Conscience) which granted religious tolerance to boast Catholic and Protestant dissenters such as Quakers and Puritans. This policy was deeply controversial since it bypassed parliamentary authority and was seen as an attempt to undermine the established Anglican Church. The supported religious tolerance caused alarm among Protestants, who feared a return to the dominance Roman Catholicism.
+
+Social-political context:
+The events that unfolded after King Charles II's death in 1685 made James' succession possible thanks to the alliance of the Catholics with the more conservative Tory-Anglican party related to a current of High Church movement (within the Anglican Church) that gave much importance to tradition, hierarchy and external forms of worship, being opposed by anti-Catholic "petitioners" and "abhorrers" under the name of Whigs.
+
+Cultural context:
+The late 17th century was the high point of the Scientific Revolution characterized by:
+  1. The new Copernicus' heliocentrism envisioning the Earth moving around the Sun, like all the other planets, and the Moon orbiting around the Earth
+  2. Increasing influence of the findings and thoughts of Galileo, Kepler, and Newton
+  3. In 1687, just a year after the publication of Fontenelle's Entretiens sur la pluralité des mondes, Isaac Newton's Principia Mathematica provided ground-breaking hypotheses about gravity influencing the motion of all physical corps, from an apple falling from a tree up to all gigantic corps in the universe.
+  4. These new ideas rose interest in Natural Philosophy, Astronomy, and scientific inquiry extended also to chronology of the world, in contrast with reacting religious authorities, who were responding trying to reinforce theological orthodoxy.
+  5. The emerging of Enlightenment in western Europe is epitomized by Fontenelle's work. This cultural novel was one of the scientific writings in a vulgar language (French) while explicitly oriented to a female audience implicitly making science popular and approachable to every non-"savant" people.
+  6. The picture of the universe as infinite in space and time prefiguring the whole world as independent from a continuous creator presence and negating the necessity of a Deus ex machina with a pre-established hierarchy of physical and animated beings. Free access of scientific and philosophical developments favoured by the expansion of printing press was opening the way to revolutionary shifts in the customs of the overall society where women and illiterate people in general started to be interested in new discoveries. The new ideas about science, governance, and the universe became increasingly intertwined.
 
 Instructions:
   - Compare the source text and target_untagged text carefully.
@@ -15,12 +36,12 @@ Instructions:
   - Only identify segments if the translator has deliberately omitted content from the source text that should appear in the target text.
   - For each identified instance, provide:
     - The exact text segment from the source text that was omitted in the translation.
-    - The corresponding complete text segment from the target_untagged text where this omitted content would logically fit (but doesn't appear).
+    - The corresponding complete text segment from the target_untagged text where this omitted content would logically fit (but does not appear).
     - An explanation of why this source text element was likely censored in the translation.
 
 Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
-
 You must respond with ONLY a valid JSON object according to the format below, without any introduction, explanation, or conclusion text:
+
 {
   "source_segments": [...],
   "target_segments": [...],
@@ -28,6 +49,7 @@ You must respond with ONLY a valid JSON object according to the format below, wi
 }
 
 If no instances are found, you must only return:
+
 {
   "source_segments": [],
   "target_segments": [],
@@ -35,26 +57,6 @@ If no instances are found, you must only return:
 }
 
 Do not include any text outside the JSON object. Your entire response must be valid JSON and nothing else.
-
-**CRITICAL MATCHING REQUIREMENT**:
-  - You MUST copy segments CHARACTER-BY-CHARACTER without any modifications
-  - When selecting a segment, ensure the exact string exists in the text
-  - Copy segments directly from the text provided to you WITHOUT ANY CHANGES:
-    - DO NOT "correct" spacing (keep all extra spaces exactly as they appear)
-    - DO NOT normalize punctuation in any way (keep exactly as is)
-    - DO NOT remove trailing commas, periods, or other punctuation
-    - DO NOT add or remove even a single character
-    - DO NOT "clean up" the text in any way
-  - After extracting each segment, verify it by checking that an exact match can be found in the original text
-  - If you cannot find an exact, character-by-character match for your segment, adjust your selection
-  - Each explanation should identify what source content was omitted in the translation and why.
-  - If no instances are identified, return an empty array for both source_segments, target_segments, and explanations.
-  - Do not include any special characters like \n in the explanations.
-  - Output your response in valid JSON format with the following keys:
-    - "source_segments" (array of source text portions that were omitted in translation)
-    - "target_segments" (array of target text portions where the omitted content would logically fit)
-    - "explanations" (array of explanations, each corresponding to a pair of source and target segments)
-  - Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
 
 Examples:
 
