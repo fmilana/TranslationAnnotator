@@ -1,6 +1,8 @@
-*.env
+.env*
 src/__pycache__/
 data/results/test/
+app/build/mac-cert.p12
+app/build/win-cert.pfx
 app/node_modules/
 app/out/
 dist/

@@ -5,8 +5,11 @@
     "@electron-forge/plugin-fuses": "^7.8.0",
     "@electron-forge/publisher-github": "^7.8.0",
     "@electron/fuses": "^1.8.0",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "electron": "^35.0.3",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "electron-notarize": "^1.2.2"
   },
   "name": "translation-annotator",
   "version": "1.0.0",
@@ -73,7 +76,6 @@
     "dialog-node": "^0.2.1",
     "dir-compare": "^3.3.0",
     "dmg-builder": "^24.13.3",
-    "dotenv": "^9.0.2",
     "dotenv-expand": "^5.1.0",
     "dunder-proto": "^1.0.1",
     "eastasianwidth": "^0.2.0",
@@ -241,7 +243,7 @@
     "start": "electron .",
     "dev": "NODE_ENV=development electron .",
     "build": "electron-builder build --mac --win --linux",
-    "build:mac": "electron-builder build --mac",
+    "build:mac": "dotenv -e .env.mac -- electron-builder build --mac",
     "build:win": "electron-builder build --win",
     "build:linux": "electron-builder build --linux"
   },
@@ -260,6 +262,8 @@
   },
   "homepage": "https://github.com/fmilana/TranslationAnnotator#readme",
   "build": {
+    "forceCodeSigning": true,
+    "afterSign": "build/notarize.js",
     "appId": "com.translatorannotator.app",
     "productName": "TranslationAnnotator",
     "directories": {
@@ -267,6 +271,7 @@
       "output": "dist"
     },
     "files": [
+      "!build/mac-cert.p12",
       "**/*",
       "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
       "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
@@ -286,6 +291,10 @@
     ],
     "mac": {
       "category": "public.app-category.utilities",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
       "icon": "icon.icns"
     },
     "win": {

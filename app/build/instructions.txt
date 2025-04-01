@@ -1,0 +1,22 @@
+Requires:
+- build/mac-cert.p12
+- app/.env.mac with:
+    - APPLEID
+    - APPLEIDPASS
+    - APPLETEAMID
+    - CSC_LINK
+    - CSC_KEY_PASSWORD
+- app/.env.win with:
+    - CSC_LINK
+    - CSC_KEY_PASSWORD
+
+1. Navigate to /app
+2. Install:
+    - NodeJS
+    - Electron
+    - electron-builder
+    - dotenv
+    - dotenv-cli
+3. Run "npm run build:[win/mac/linux]"
+    - Wait for codesigning and notarization (mac)
+    - Find executables in /dist

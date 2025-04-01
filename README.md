@@ -4,42 +4,66 @@
 
 An Electron application to visualize and compare manual and AI-generated annotations of English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle, 1686. 
 
-## Instructions
+### Download links for Mac (ARM), Windows and Linux [here](https://github.com/fmilana/TranslationAnnotator/releases).
 
-### To run the application:
+## Using the Application
 
-1. Navigate to /app
+Select the translator and tag to display in the navigation bar on the top left. 
 
-2. Install nodejs and Electron
+The source text is shown in the left column, manual annotations on the target text in the middle column, and AI-generated annotations on the target text in the right column. 
 
-3. Run  ```npm start```
+Click on an annotation (highlighted text) either in the source text or in the AI-annotated target text to view an explanation for the annotation.
 
-### To build executables:
+Click Save All to export all combinations of translator and tag as individual txt and xml files.
 
-1. Navigate to /app 
+## Development
 
-2. Install electron-builder
+### Running the Application Locally
 
-2. Run ```npm run build:[win/mac/linux]```
+1. (Optional) create a conda environment
 
-3. Navigate to app/dist for executables
+2. Clone the repository
+   ```
+   git clone https://github.com/fmilana/TranslationAnnotator.git
+   ```
+3. Navigate to the app directory
+   ```
+   cd TranslationAnnotator/app
+   ```
+4. Install dependencies
+   ```
+   npm install
+   ```
+5. Start the application
+   ```
+   npm start
+   ```
 
-### Python Scripts
+### Data Processing Scripts
 
-Python scripts have already been run. If the data or prompts are modified, run: 
+The Python scripts have already been run and processed data is included. If you need to reprocess the data:
 
-- ```python src/preprocess.py``` to extract and align cleaned paragraphs from the source and translated texts.
-- ```python src/call.py --translator [translator] --tag [tag]``` to make API calls to Anthropic on all of the translator's text for the selected tag. Ensure that a .env file is created in the root folder with an ANTHROPIC_API_KEY.
+1. To extract and align paragraphs from source and translated texts:
+   ```
+   python src/preprocess.py
+   ```
 
-Translators:
-- knight
-- behn
-- glanvill
+2. To make API calls to Anthropic for annotations:
+   ```
+   python src/call.py --translator [translator] --tag [tag]
+   ```
+   
+   Note: Create a `.env` file in the root folder with your `ANTHROPIC_API_KEY`.
 
-Tags:
-- LS
-- NCE
-- RW
-- SC
-- UP
-- IIM
+   **Translators:**
+   - knight
+   - behn
+   - glanvill
+
+   **Tags:**
+   - IIM
+   - SC
+   - LS
+   - RW
+   - UP
+   - NCE
