@@ -43,12 +43,17 @@ Click Save All to export all combinations of translator and tag as individual tx
 
 The Python scripts have already been run and processed data is included. If you need to reprocess the data:
 
-1. To extract and align paragraphs from source and translated texts:
+1. Install required libraries from root folder:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. To extract and align paragraphs from source and translated texts:
    ```
    python src/preprocess.py
    ```
 
-2. To make API calls to Anthropic for annotations:
+3. To make API calls to Anthropic to generate annotations:
    ```
    python src/call.py --translator [translator] --tag [tag]
    ```
@@ -67,3 +72,5 @@ The Python scripts have already been run and processed data is included. If you 
    - RW
    - UP
    - NCE
+
+   Note: The app will take some time to load each translator-tag combination.
