@@ -244,7 +244,7 @@
     "dev": "NODE_ENV=development electron .",
     "build": "electron-builder build --mac --win --linux",
     "build:mac": "dotenv -e .env.mac -- electron-builder build --mac",
-    "build:win": "electron-builder build --win",
+    "build:win": "dotenv -e .env.win -- electron-builder build --win",
     "build:linux": "electron-builder build --linux"
   },
   "repository": {
