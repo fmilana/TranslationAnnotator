@@ -138,6 +138,41 @@ document.addEventListener("DOMContentLoaded", function () {
     if (contentWrapper.scrollTop > 0) {
         navbar.classList.add("navbar-shadow");
     }
+
+    // Close popup when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const popup = document.getElementById('explanationPopup');
+        
+        // Check if the popup exists and is visible
+        if (popup && popup.style.display === 'block') {
+            // Check if the click was inside the popup or on the close button
+            if (popup.contains(event.target) || event.target.classList.contains('close-button')) {
+                return; // Don't close if clicking on popup or close button
+            }
+            
+            // Check if click is on a highlighted text element
+            let targetElement = event.target;
+            let isHighlightedText = false;
+            
+            // Check if the click is on or inside a highlighted text
+            while (targetElement && !isHighlightedText) {
+                if (targetElement.classList && 
+                    (targetElement.classList.contains('highlight-text') || 
+                    targetElement.classList.contains('semi-highlight-text'))) {
+                    isHighlightedText = true;
+                }
+                targetElement = targetElement.parentElement;
+            }
+            
+            // If click was on a highlighted text, don't close the popup
+            if (isHighlightedText) {
+                return;
+            }
+            
+            // For all other cases, close the popup
+            closeExplanationPopup();
+        }
+    });
   
     loadData();
     
