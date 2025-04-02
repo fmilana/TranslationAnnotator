@@ -271,17 +271,25 @@
       "output": "dist"
     },
     "files": [
+      "build/icon.icns",
+      "build/icon.ico",
+      "build/icon.png",
+      "build/entitlements.mac.plist",
       "!build/mac-cert.p12",
-      "**/*",
-      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
-      "!**/node_modules/*.d.ts",
-      "!**/node_modules/.bin",
+      "!build/win-cert.pfx",
+      "!build/icon-transparent.icns",
+      "!build/notarize.js",
+      "!build/instructions.txt",
+      "index.html",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "style.css",
+      "package.json",
+      "package-lock.json",
       "!**/.{idea,git,cache,github,vscode}/**",
-      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
-      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
-      "!**/{appveyor.yml,.travis.yml,circle.yml}",
-      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+      "!**/{.DS_Store,.git,.gitignore}",
+      "!**/node_modules/**"
     ],
     "extraResources": [
       {
