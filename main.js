@@ -139,9 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
           
           // Check if the click is on or inside a highlighted text
           while (targetElement && !isHighlightedText) {
-              if (targetElement.classList && 
-                  (targetElement.classList.contains('highlight-text') || 
-                  targetElement.classList.contains('semi-highlight-text'))) {
+              if (targetElement.classList && targetElement.classList.contains('highlight-text-container')) {
                   isHighlightedText = true;
               }
               targetElement = targetElement.parentElement;
