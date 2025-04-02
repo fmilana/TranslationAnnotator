@@ -6,6 +6,8 @@ An Electron application to visualize and compare manual and AI-generated annotat
 
 ### Download links for Mac (ARM), Windows and Linux [here](https://github.com/fmilana/TranslationAnnotator/releases).
 
+### Web version of the application [here](https://fmilana.com/TranslationAnnotator).
+
 ## Using the Application
 
 Select the translator and tag to display in the navigation bar on the top left. 
