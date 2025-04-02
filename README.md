@@ -2,7 +2,7 @@
 
 ![App Screenshot](screenshots/LS_light.png)
 
-An Electron application to visualize and compare manual and AI-generated annotations of English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle, 1686. 
+An Electron application to visualize and compare manual and AI-generated annotations of English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle, 1686.
 
 ### Download links for Mac (ARM), Windows and Linux [here](https://github.com/fmilana/TranslationAnnotator/releases).
 

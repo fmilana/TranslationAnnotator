@@ -1,0 +1,22 @@
+{
+    "files": [
+        "fontenelle.xml",
+        "behn_IIM.xml",
+        "behn_LS.xml", 
+        "behn_NCE.xml",
+        "behn_RW.xml",
+        "behn_SC.xml",
+        "behn_UP.xml",
+        "glanvill_IIM.xml",
+        "glanvill_LS.xml",
+        "glanvill_NCE.xml",
+        "glanvill_RW.xml",
+        "glanvill_SC.xml",
+        "glanvill_UP.xml",
+        "knight_IIM.xml",
+        "knight_LS.xml",
+        "knight_NCE.xml",
+        "knight_RW.xml",
+        "knight_SC.xml",
+        "knight_UP.xml"]
+}

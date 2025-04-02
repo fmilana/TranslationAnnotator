@@ -1,0 +1,22 @@
+{
+    "files": [
+        "fontenelle.txt",
+        "behn_IIM.txt",
+        "behn_LS.txt", 
+        "behn_NCE.txt",
+        "behn_RW.txt",
+        "behn_SC.txt",
+        "behn_UP.txt",
+        "glanvill_IIM.txt",
+        "glanvill_LS.txt",
+        "glanvill_NCE.txt",
+        "glanvill_RW.txt",
+        "glanvill_SC.txt",
+        "glanvill_UP.txt",
+        "knight_IIM.txt",
+        "knight_LS.txt",
+        "knight_NCE.txt",
+        "knight_RW.txt",
+        "knight_SC.txt",
+        "knight_UP.txt"]
+}
