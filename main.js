@@ -9,6 +9,8 @@ const tags = {
     "UP": "Added Text"
 }
 
+let firstLoad = true;
+
 document.addEventListener("DOMContentLoaded", function () {
   showLoading();
 
@@ -199,6 +201,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         
         hideLoading();
+
+        if (firstLoad) {
+          // Show welcome popup on first load
+          createWelcomePopup();
+          firstLoad = false;
+        }
       })
       .catch(error => {
         console.error('Error loading data:', error);
@@ -555,4 +563,74 @@ async function saveFilesToZip() {
     console.error("Error creating zip file:", error);
     alert("There was an error creating the zip file. Please try again.");
   }
+}
+
+
+function createWelcomePopup() {
+  // Check if user has seen the popup before
+  if (sessionStorage.getItem('welcomePopupShown') === 'true') {
+    return; // Skip if already shown in this session
+  }
+  
+  // Create modal backdrop
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+  
+  // Create popup container
+  const popup = document.createElement('div');
+  popup.id = 'welcomePopup';
+  popup.className = document.body.classList.contains('bg-dark') ? 'welcome-popup dark-mode' : 'welcome-popup';
+  
+  // Create title
+  const title = document.createElement('h3');
+  title.textContent = 'Welcome to the Translation Annotator';
+  title.className = 'welcome-title';
+  
+  // Create content
+  const content = document.createElement('div');
+  content.className = 'welcome-content';
+  content.innerHTML = `
+    <p>This tool helps you display and compare manual and AI-generated annotations on different English translations of "Conversations on the Plurality of Worlds" by Bernard Le Bovier de Fontenelle, 1686.</p>
+    <div class="instruction-container">
+      <div class="instruction-item">
+        <i class="bi bi-hand-index"></i>
+        <p><strong>Click on highlighted text</strong> in either the Source Text (left column) or the Target Text with AI-generated annotations (right column) to see explanations.</p>
+      </div>
+      <div class="instruction-item">
+        <i class="bi bi-arrow-left-right"></i>
+        <p>Hover over AI-generated annotations in the right column to see the corresponding text highlighted in the Source Text.</p>
+      </div>
+      <div class="instruction-item">
+        <i class="bi bi-list"></i>
+        <p>Use the <strong>Translator</strong> and <strong>Tag</strong> dropdowns in the top left corner to switch between different translations and annotation types.</p>
+      </div>
+    </div>
+  `;
+  
+  // Create button container
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'welcome-button-container';
+  
+  // Create close button
+  const closeButton = document.createElement('button');
+  closeButton.className = 'btn btn-primary';
+  closeButton.textContent = 'Got it!';
+  closeButton.onclick = function() {
+    // Hide and remove popup
+    document.body.removeChild(backdrop);
+    document.body.removeChild(popup);
+    
+    // Set flag in sessionStorage instead of localStorage
+    sessionStorage.setItem('welcomePopupShown', 'true');
+  };
+  
+  // Assemble popup
+  buttonContainer.appendChild(closeButton);
+  popup.appendChild(title);
+  popup.appendChild(content);
+  popup.appendChild(buttonContainer);
+  
+  // Add to body
+  document.body.appendChild(backdrop);
+  document.body.appendChild(popup);
 }
