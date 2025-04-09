@@ -45,15 +45,15 @@ def main():
         raise ValueError('"ANTHROPIC_API_KEY" not found. Please check your .env file.')
 
     # Read the user prompt template
-    with open(f'prompts/user_prompt.txt') as file:
+    with open(f'prompts/user_prompt.txt', encoding='utf-8') as file:
         user_prompt_template = file.read()
 
     # Read the system prompt for the specified tag
-    with open(f'prompts/system_prompt_{args.tag}.txt', 'r') as file:
+    with open(f'prompts/system_prompt_{args.tag}.txt', 'r', encoding='utf-8') as file:
         system_prompt = file.read()
 
     # Read the processed data for the specified translator
-    with open(f'app/data/processed/{args.translator}_aligned.json', 'r') as file:
+    with open(f'app/data/processed/{args.translator}_aligned.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     results = []
@@ -120,7 +120,7 @@ def main():
         })
 
     # Save results to file
-    with open(f'app/data/results/{args.translator}_{args.tag}.json', 'w') as file:
+    with open(f'app/data/results/{args.translator}_{args.tag}.json', 'w', encoding='utf-8') as file:
         json.dump({'chunks': results}, file, indent=2)
 
     # Print a message indicating the results were saved
