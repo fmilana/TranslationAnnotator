@@ -104,6 +104,10 @@
     color: white;
   }
 
+  #selectedModel {
+    color: white;
+  }
+
   #saveButton {
     height: 30px;
     padding-top: 0;

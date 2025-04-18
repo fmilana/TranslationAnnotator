@@ -17,12 +17,46 @@ document.addEventListener("DOMContentLoaded", function () {
   
     let translator = "knight";
     let tag = "IIM";
+    let model = "gpt";
     
     // Get the navbar and content wrapper elements
     const navbar = document.querySelector(".navbar");
     const contentWrapper = document.querySelector(".content-wrapper");
   
     // Add event listeners to tag dropdown items
+    document.querySelectorAll(".translator-item").forEach(item => {
+        item.addEventListener("click", function(e) {
+          const translatorSelected = this.textContent.replace(/\s*\(\d+\)$/, '').toLowerCase();
+    
+          // Update the displayed translator in the dropdown
+          document.getElementById("selectedTranslator").textContent = this.textContent;
+          
+          // Store the selected translator in the variable
+          let same = false;
+          if (translatorSelected === translator.toLowerCase()) {
+            same = true;
+          }
+    
+          if (same) {
+            return;
+          }
+    
+          translator = translatorSelected;
+    
+          // load data for the selected translator
+          showLoading();
+  
+          closeExplanationPopup();
+    
+          // setTimeout(() => {
+            loadData();
+          // }, 0);
+    
+          // Prevent default anchor behavior
+          e.preventDefault();
+        });
+    });
+
     document.querySelectorAll(".tag-item").forEach(item => {
       item.addEventListener("click", function(e) {
         const tagSelected = this.textContent.split(" -")[0];
@@ -54,39 +88,39 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
       });
     });
-  
-    document.querySelectorAll(".translator-item").forEach(item => {
-      item.addEventListener("click", function(e) {
-        const translatorSelected = this.textContent.replace(/\s*\(\d+\)$/, '').toLowerCase();
-  
-        // Update the displayed translator in the dropdown
-        document.getElementById("selectedTranslator").textContent = this.textContent;
-        
-        // Store the selected translator in the variable
-        let same = false;
-        if (translatorSelected === translator.toLowerCase()) {
-          same = true;
-        }
-  
-        if (same) {
-          return;
-        }
-  
-        translator = translatorSelected;
-  
-        // load data for the selected translator
-        showLoading();
 
-        closeExplanationPopup();
-  
-        // setTimeout(() => {
-          loadData();
-        // }, 0);
-  
-        // Prevent default anchor behavior
-        e.preventDefault();
+    document.querySelectorAll(".model-item").forEach(item => {
+        item.addEventListener("click", function(e) {
+            const fullModelName = this.textContent;
+            const modelSelected = fullModelName.split("-")[0].toLowerCase();
+        
+            // Update the displayed tag in the dropdown
+            document.getElementById("selectedModel").textContent = fullModelName;
+        
+            let same = false;
+            if (modelSelected === model) {
+                same = true;
+            }
+            if (same) {
+                return;
+            }
+            
+            // Store the selected tag in the variable
+            model = modelSelected;
+        
+            showLoading();
+    
+            closeExplanationPopup();
+        
+            // load data for the selected tag
+            // setTimeout(() => {
+                loadData();
+            // }, 0);
+        
+            // Prevent default anchor behavior
+            e.preventDefault();
+        });
       });
-    });
 
     // Add event listener to save button
     document.getElementById("saveButton").addEventListener("click", function() {      
@@ -178,12 +212,11 @@ document.addEventListener("DOMContentLoaded", function () {
      * Load and display data based on current selections
      */
     function loadData() {
-        console.log(`Loading data for translator ${translator.toLowerCase()} tag: ${tag}`);
         const tableBody = document.getElementById("comparisonTableBody");
         
         try {
             // Use the data processor to get data
-            const dataPromise = window.electron.readData(translator, tag);
+            const dataPromise = window.electron.readData(translator, tag, model);
 
             dataPromise.then(data => {  
               tableBody.innerHTML = ""; // Clear previous content

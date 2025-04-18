@@ -10,7 +10,7 @@ An Electron application to visualize and compare manual and AI-generated annotat
 
 ## Using the Application
 
-Select the translator and tag to display in the navigation bar on the top left. 
+Select the translator, tag and model to display in the navigation bar on the top left. 
 
 The source text is shown in the left column, manual annotations on the target text in the middle column, and AI-generated annotations on the target text in the right column. 
 
@@ -57,10 +57,10 @@ The Python scripts have already been run and processed data is included. If you 
 
 3. To make API calls to Anthropic to generate annotations:
    ```
-   python src/call.py --translator [translator] --tag [tag]
+   python src/call.py --translator [translator] --tag [tag] --model [model]
    ```
    
-   Note: Create a `.env` file in the root folder with your `ANTHROPIC_API_KEY`.
+   Note: Create a `.env` file in the root folder with your `ANTHROPIC_API_KEY` and/or `OPENAI_API_KEY`.
 
    **Translators:**
    - knight
@@ -74,5 +74,9 @@ The Python scripts have already been run and processed data is included. If you 
    - RW
    - UP
    - NCE
+
+   **Models:**
+   - claude-3-7-sonnet-latest
+   - gpt-4.1-2025-04-14
 
    Note: The app will take some time to load each translator-tag combination.

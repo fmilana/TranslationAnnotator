@@ -10,7 +10,7 @@ contextBridge.exposeInMainWorld('electron', {
   saveFiles: (destPath) => ipcRenderer.invoke('save-files', destPath),
 
   // File operations - delegate to main process
-  readData: (translator, tag) => ipcRenderer.invoke('read-data', translator, tag),
+  readData: (translator, tag, model) => ipcRenderer.invoke('read-data', translator, tag, model),
 
   // File operations - delegate to main process
   updateSaveButton: (translators, tags) => ipcRenderer.invoke('update-save-button'),

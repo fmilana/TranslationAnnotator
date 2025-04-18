@@ -58,20 +58,22 @@ ipcMain.handle("save-files", async (event, destPath) => {
   const files = [];
 
   // Get the list of files in the cache directory
-  const txtCacheDir = path.join(__dirname, "data", "cache", "extracted", "txt");
-  const xmlCacheDir = path.join(__dirname, "data", "cache", "extracted", "xml");
+  for (const model of ['gpt', 'claude']) {
+    const txtCacheDir = path.join(__dirname, "data", "cache", "extracted", model, "txt");
+    const xmlCacheDir = path.join(__dirname, "data", "cache", "extracted", model, "xml");
 
-  const txtFiles = fs.readdirSync(txtCacheDir).map(file => path.join(txtCacheDir, file));
-  const xmlFiles = fs.readdirSync(xmlCacheDir).map(file => path.join(xmlCacheDir, file));
+    const txtFiles = fs.readdirSync(txtCacheDir).map(file => path.join(txtCacheDir, file));
+    const xmlFiles = fs.readdirSync(xmlCacheDir).map(file => path.join(xmlCacheDir, file));
 
-  files.push(...txtFiles, ...xmlFiles);
+    files.push(...txtFiles, ...xmlFiles);
+  }
 
   saveFiles(files, destPath);
   return { success: true };
 });
 
-ipcMain.handle("read-data", async (event, translator, tag) => {
-  return readData(translator, tag);
+ipcMain.handle("read-data", async (event, translator, tag, model) => {
+  return readData(translator, tag, model);
 });
 
 // ipcMain.handle("update-save-button", async (event, translators, tags) => {
@@ -101,13 +103,13 @@ ipcMain.handle("read-data", async (event, translator, tag) => {
 // }
 
 
-function readData(translator, tag) {
+function readData(translator, tag, model) {
   try {
       // Path to original data
-      const dataPath = path.join(__dirname, "data", "results", `${translator}_${tag}.json`);
+      const dataPath = path.join(__dirname, "data", "results", model, `${translator}_${tag}.json`);
       
       // Path to cached processed data
-      const cacheDir = path.join(__dirname, "data", "cache");
+      const cacheDir = path.join(__dirname, "data", "cache", model);
       const cachePath = path.join(cacheDir, `${translator}_${tag}.json`);
       
       // Ensure cache directory exists
@@ -131,7 +133,7 @@ function readData(translator, tag) {
       fs.writeFileSync(cachePath, JSON.stringify(processedData));
       
       // now extract xmls and txts to cache/extracted
-      extractFiles(translator, tag);
+      extractFiles(translator, tag, model);
 
       return processedData;
   } catch (error) {
@@ -231,15 +233,15 @@ function highlightSegments(chunkSegments, text, highlightType, tag) {
 }
 
 
-function extractFiles(translator, tag) {
+function extractFiles(translator, tag, model) {
   // check if files have already been extracted (at least one file in the folder)
-  const extractedDir = path.join(__dirname, "data", "cache", "extracted");
+  const extractedDir = path.join(__dirname, "data", "cache", "extracted", model);
   const txtDir = path.join(extractedDir, "txt");
   fs.readdir(txtDir, (err, files) => {
     let xml = "";
     
     if (!files.includes(`${translator}_${tag}.xml`) && !files.includes(`${translator}_${tag}.txt`)) {
-      const cachePath = path.join(__dirname, "data", "cache", `${translator}_${tag}.json`);
+      const cachePath = path.join(__dirname, "data", "cache", model, `${translator}_${tag}.json`);
       const cacheData = JSON.parse(fs.readFileSync(cachePath, "utf8"));
       const chunks = cacheData.chunks;
       let xmlContent = "";
@@ -254,12 +256,12 @@ function extractFiles(translator, tag) {
 
       // Save the XML and TXT files
       // Save XML to 'xml' folder
-      const xmlPath = path.join(__dirname, "data", "cache", "extracted", "xml", `${translator}_${tag}.xml`);
+      const xmlPath = path.join(__dirname, "data", "cache", "extracted", model, "xml", `${translator}_${tag}.xml`);
       fs.writeFileSync(xmlPath, xml);
 
       // Save TXT to 'txt' folder
       const txtContent = xmlContent.replace(/&amp;/g, '&');  // Unescape XML entities if needed
-      const txtPath = path.join(__dirname, "data", "cache", "extracted", "txt", `${translator}_${tag}.txt`);
+      const txtPath = path.join(__dirname, "data", "cache", "extracted", model, "txt", `${translator}_${tag}.txt`);
       fs.writeFileSync(txtPath, txtContent);
     }
 
@@ -493,52 +495,60 @@ function extractSource() {
   // Wrap the accumulated XML content with a root element and add XML declaration
   const wrappedXml = `<?xml version="1.0" encoding="UTF-8"?>\n<root>\n${xmlContent}</root>`;
 
-  // Save XML to file
-  const xmlPath = path.join(__dirname, "data", "cache", "extracted", "xml", "fontenelle.xml");
-  fs.writeFileSync(xmlPath, wrappedXml);
+  for (const model of ['gpt', 'claude']) {
+    // Save XML to file
+    const xmlPath = path.join(__dirname, "data", "cache", "extracted", model, "xml", "fontenelle.xml");
+    fs.writeFileSync(xmlPath, wrappedXml);
 
-  // Save as TXT (same content, different extension)
-  const txtPath = path.join(__dirname, "data", "cache", "extracted", "txt", "fontenelle.txt");
-  xmlContent = xmlContent.replace(/&amp;/g, '&');
-  fs.writeFileSync(txtPath, xmlContent);  // TXT file contains just the inner content without XML declaration
+    // Save as TXT (same content, different extension)
+    const txtPath = path.join(__dirname, "data", "cache", "extracted", model, "txt", "fontenelle.txt");
+    xmlContent = xmlContent.replace(/&amp;/g, '&');
+    fs.writeFileSync(txtPath, xmlContent);  // TXT file contains just the inner content without XML declaration
+  }
 }
 
 
 function saveFiles(files, destinationPath) {
-  if (!fs.existsSync(path.join(destinationPath, "Translation Annotator Results"))) {
-    fs.mkdirSync(path.join(destinationPath, "Translation Annotator Results"), { recursive: true });
+  const resultsFolder = path.join(destinationPath, "Translation Annotator Results");
+
+  if (!fs.existsSync(resultsFolder)) {
+    fs.mkdirSync(resultsFolder, { recursive: true });
   }
 
-  destinationPath = path.join(destinationPath, "Translation Annotator Results");
-
-  // Define subdirectories for XML and TXT files
-  const xmlFolder = path.join(destinationPath, 'xml');
-  const txtFolder = path.join(destinationPath, 'txt');
-
-  // Ensure both subdirectories exist
-  if (!fs.existsSync(xmlFolder)) {
-      fs.mkdirSync(xmlFolder, { recursive: true });
-  }
-  if (!fs.existsSync(txtFolder)) {
-      fs.mkdirSync(txtFolder, { recursive: true });
-  }
-
-  // Loop through each file and save it in the appropriate folder based on its extension
+  // Loop through each file and save it in the appropriate folder
   for (const file of files) {
       const fileName = path.basename(file);
       const fileExtension = path.extname(file).toLowerCase(); // Handle case-insensitive extensions
+      const lowerCasePath = file.toLowerCase();
 
-      let destinationFolder;
+      let modelFolder = null;
+
+      if (lowerCasePath.includes('gpt')) {
+          modelFolder = path.join(resultsFolder, 'gpt');
+      } else if (lowerCasePath.includes('claude')) {
+          modelFolder = path.join(resultsFolder, 'claude');
+      } else {
+          console.warn(`Skipping file (no model folder matched): ${file}`);
+          continue;
+      }
+
+      let typeFolder = null;
+
       if (fileExtension === '.xml') {
-          destinationFolder = xmlFolder;
+          typeFolder = path.join(modelFolder, 'xml');
       } else if (fileExtension === '.txt') {
-          destinationFolder = txtFolder;
+          typeFolder = path.join(modelFolder, 'txt');
       } else {
           console.warn(`Skipping unsupported file type: ${file}`);
           continue;
       }
 
-      const destinationFilePath = path.join(destinationFolder, fileName);
+      // Ensure the subdirectory exists
+      if (!fs.existsSync(typeFolder)) {
+          fs.mkdirSync(typeFolder, { recursive: true });
+      }
+
+      const destinationFilePath = path.join(typeFolder, fileName);
       fs.copyFileSync(file, destinationFilePath);
   }
 }
