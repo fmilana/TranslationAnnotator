@@ -4,7 +4,7 @@ Link to the web version: [https://fmilana.com/TranslationAnnotator](https://fmil
 
 ## Using the Application
 
-Select the translator and tag to display in the navigation bar on the top left. 
+Select the translator, tag and model in the navigation bar on the top left. 
 
 The source text is shown in the left column, manual annotations on the target text in the middle column, and AI-generated annotations on the target text in the right column. 
 
