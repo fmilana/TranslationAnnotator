@@ -10,7 +10,7 @@ An Electron application to visualize and compare manual and AI-generated annotat
 
 ## Using the Application
 
-Select the translator, tag and model to display in the navigation bar on the top left. 
+Select the translator, tag and model in the navigation bar on the top left. 
 
 The source text is shown in the left column, manual annotations on the target text in the middle column, and AI-generated annotations on the target text in the right column. 
 
