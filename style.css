@@ -100,7 +100,15 @@
     color: white;
   }
 
+  #tagDropdown {
+    width: 70px;
+  }
+
   #selectedTag {
+    color: white;
+  }
+
+  #selectedModel {
     color: white;
   }
 
