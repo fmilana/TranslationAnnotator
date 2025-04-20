@@ -100,6 +100,10 @@
     color: white;
   }
 
+  #tag-dropdown {
+  width: 70px; 
+}
+
   #selectedTag {
     color: white;
   }
