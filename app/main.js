@@ -142,6 +142,7 @@ function readData(translator, tag, model) {
   }
 }
 
+
 function processData(data, tag) {
   const processed = {
       chunks: data.chunks.map(chunk => {      
@@ -479,7 +480,7 @@ function calculateCounts(chunks, tag) {
 
 function extractSource() {
   // Load cached data
-  const cachePath = path.join(__dirname, "data", "cache", "knight_IIM.json");
+  const cachePath = path.join(__dirname, "data", "cache", "gpt", "knight_IIM.json");
   const cacheData = JSON.parse(fs.readFileSync(cachePath, "utf8"));
   const chunks = cacheData.chunks;
   let xmlContent = '';  // Accumulate the content inside <root>
