@@ -527,24 +527,31 @@ async function saveFilesToZip() {
     // Create main folders directly in the root
     const claudeFolder = zip.folder("claude");
     const gptFolder = zip.folder("gpt");
+    const geminiFolder = zip.folder("gemini");
     
     // Create subfolders for each model
     const claudeXmlFolder = claudeFolder.folder("xml");
     const claudeTxtFolder = claudeFolder.folder("txt");
     const gptXmlFolder = gptFolder.folder("xml");
     const gptTxtFolder = gptFolder.folder("txt");
+    const geminiXmlFolder = geminiFolder.folder("xml");
+    const geminiTxtFolder = geminiFolder.folder("txt");
     
     // Prepare file lists for each folder
     let claudeXmlFiles = [];
     let claudeTxtFiles = [];
     let gptXmlFiles = [];
     let gptTxtFiles = [];
+    let geminiXmlFiles = [];
+    let geminiTxtFiles = [];
     
     try {
       claudeXmlFiles = await getFileList('data/extracted/claude/xml');
       claudeTxtFiles = await getFileList('data/extracted/claude/txt');
       gptXmlFiles = await getFileList('data/extracted/gpt/xml');
       gptTxtFiles = await getFileList('data/extracted/gpt/txt');
+      geminiXmlFiles = await getFileList('data/extracted/gemini/xml');
+      geminiTxtFiles = await getFileList('data/extracted/gemini/txt');
     } catch (err) {
       console.warn("Couldn't get file lists dynamically: ", err);
     }
@@ -576,13 +583,21 @@ async function saveFilesToZip() {
     const gptTxtPromises = gptTxtFiles.map(file =>
       fetchAndAddFile(file, 'data/extracted/gpt/txt', gptTxtFolder)
     );
+    const geminiXmlPromises = geminiXmlFiles.map(file =>
+      fetchAndAddFile(file, 'data/extracted/gemini/xml', geminiXmlFolder)
+    );
+    const geminiTxtPromises = geminiTxtFiles.map(file =>
+      fetchAndAddFile(file, 'data/extracted/gemini/txt', geminiTxtFolder)
+    );
     
     // Wait for all files to be fetched and added
     await Promise.all([
       ...claudeXmlPromises, 
       ...claudeTxtPromises,
       ...gptXmlPromises,
-      ...gptTxtPromises
+      ...gptTxtPromises,
+      ...geminiXmlPromises,
+      ...geminiTxtPromises
     ]);
     
     // Generate the zip file
