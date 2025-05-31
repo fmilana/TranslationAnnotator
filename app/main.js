@@ -58,7 +58,7 @@ ipcMain.handle("save-files", async (event, destPath) => {
   const files = [];
 
   // Get the list of files in the cache directory
-  for (const model of ['gpt', 'claude']) {
+  for (const model of ['gpt', 'claude', 'gemini']) {
     const txtCacheDir = path.join(__dirname, "data", "cache", "extracted", model, "txt");
     const xmlCacheDir = path.join(__dirname, "data", "cache", "extracted", model, "xml");
 
@@ -72,7 +72,7 @@ ipcMain.handle("save-files", async (event, destPath) => {
   return { success: true };
 });
 
-ipcMain.handle("read-data", async (event, translator, tag, model) => {
+ipcMain.handle('read-data', async (event, translator, tag, model) => {
   return readData(translator, tag, model);
 });
 
@@ -496,7 +496,7 @@ function extractSource() {
   // Wrap the accumulated XML content with a root element and add XML declaration
   const wrappedXml = `<?xml version="1.0" encoding="UTF-8"?>\n<root>\n${xmlContent}</root>`;
 
-  for (const model of ['gpt', 'claude']) {
+  for (const model of ['gpt', 'claude', 'gemini']) {
     // Save XML to file
     const xmlPath = path.join(__dirname, "data", "cache", "extracted", model, "xml", "fontenelle.xml");
     fs.writeFileSync(xmlPath, wrappedXml);
@@ -528,6 +528,8 @@ function saveFiles(files, destinationPath) {
           modelFolder = path.join(resultsFolder, 'gpt');
       } else if (lowerCasePath.includes('claude')) {
           modelFolder = path.join(resultsFolder, 'claude');
+      } else if (lowerCasePath.includes('gemini')) {
+          modelFolder = path.join(resultsFolder, 'gemini');
       } else {
           console.warn(`Skipping file (no model folder matched): ${file}`);
           continue;
