@@ -38,6 +38,7 @@ Instructions:
     - The exact text segment from the target_untagged text that was added and doesn't exist in the source.
     - The corresponding complete text segment from the source text where this added content would logically fit (but doesn't appear).
     - An explanation of why this target text element was likely added in the translation.
+  - CRITICAL: DO NOT INSERT OR MODIFY TEXT IN THE SOURCE AND TARGET SEGMENTS, SUCH AS PARAGRAPH TAGS, [omitted], OR PARAPHRASES. THESE SEGMENTS WILL LATER BE MATCHED WITH THE ORIGINAL TEXT. IF YOU MODIFY TEXT IN THE SEGMENTS, THE DOWNSTREAM MATCHING TASK WILL FAIL.
 
 Do not consider paragraph XML tags (e.g., <P001>); leave them untouched.
 You must respond with ONLY a valid JSON object according to the format below, without any introduction, explanation, or conclusion text:

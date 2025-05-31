@@ -5,3 +5,4 @@ tenacity
 tqdm
 pandas
 chardet
+google-genai

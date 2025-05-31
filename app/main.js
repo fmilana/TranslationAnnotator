@@ -145,7 +145,7 @@ function readData(translator, tag, model) {
 
 function processData(data, tag) {
   const processed = {
-      chunks: data.chunks.map(chunk => {      
+      chunks: data.chunks.map(chunk => {
           const formatted_source = formatText(chunk.source_manual);
           const formatted_manual = formatText(chunk.target_manual, tag);
           const formatted_target = formatText(chunk.target_manual);
