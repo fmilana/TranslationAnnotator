@@ -76,8 +76,8 @@ The Python scripts have already been run and processed data is included. If you 
    - NCE
 
    **Models:**
-   - claude-3-7-sonnet-latest
-   - gpt-4.1-2025-04-14
+   - claude
+   - gpt
    - gemini
 
    Note: The app will take some time to load each translator-tag combination.
