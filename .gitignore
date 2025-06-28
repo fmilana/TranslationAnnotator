@@ -8,3 +8,4 @@ app/out/
 dist/
 app/.DS_Store
 .DS_Store
+app/data/raw/*_old.xml
